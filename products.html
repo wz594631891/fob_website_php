@@ -1,9 +1,21 @@
 <html>
   <head>
-    {%include 'head.html'%}
+    <!-- {%include 'head.html'%} -->
+    <script src="static/js/jquery.js"></script>
+    <header id="headContent"></header>
+    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js"></script>
+    <script src="/static/js/vue.js"></script>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <!-- <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <!-- <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script src="/static/js/bootstrap.js"></script>
   </head>
   <body>
-    {%include 'top.html'%}
+    <header id="topContent"></header>
+
+    <!-- {%include 'top.html'%} -->
     <!-- 正文 -->
     <!-- performance大框 -->
     <!-- 960*530 -->
@@ -182,12 +194,22 @@
     </ul>
 
 </div>
-      {%include 'copyright.html'%}
 
-  </body>
+<!-- {%include 'copyright.html'%} -->
+<header id="copyrightContent"></header>
+
+</body>
   <footer>
-    
-    {%include 'footer.html'%}
+    <!-- {%include 'footer.html'%} -->
+    <header id="footerContent"></header>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#topContent").load("top.html");
+        $("#headContent").load("head.html");
+        $("#copyrightContent").load("copyright.html");
+        $("#footerContent").load("footer.html");
+      });
+    </script>
     
   </footer>
 </html>
