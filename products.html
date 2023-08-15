@@ -1,0 +1,193 @@
+<html>
+  <head>
+    {%include 'head.html'%}
+  </head>
+  <body>
+    {%include 'top.html'%}
+    <!-- 正文 -->
+    <!-- performance大框 -->
+    <!-- 960*530 -->
+    <!-- performance大框CSS -->
+    <style>
+      #recommend_for_you{
+        margin-top: 30px;
+        margin-left:30px;
+      }
+      #reviews{
+        margin-top: 30px;
+        margin-left:30px;
+        border-radius: 5px;
+        background-color: white;
+        width:960px;
+        overflow: hidden;
+      }
+      #profile_detail{
+        margin-top: 30px;
+        margin-left:30px;
+        border-radius: 5px;
+        background-color: white;
+        width:960px;
+        overflow: hidden;
+      }
+      #profile{
+        margin-top: 30px;
+        margin-left:30px;
+        border-radius: 5px;
+        background-color: white;
+        width:960px;
+        overflow: hidden;
+      }
+      body{
+        background-color: white;
+        position: relative;
+      }
+      .container-flow{
+        position: relative;
+      }
+      #contact_supplier{
+        width:960px;
+        height:390px;
+        width: 220px;
+        left:1010px;
+        top:0px;
+        border-radius: 5px;
+        background-color: white;
+        position: absolute;
+        overflow: hidden;
+      }
+      #performance_div{
+        width:960px;
+        height:530px;
+        margin-left:30px;
+        margin-top:20px;
+        border-radius: 5px;
+        background-color: white;
+        position: relative;
+      }
+      #performance{
+        margin-left:30px;
+        margin-top:20px;
+        
+      }
+      video,#video{
+        width: 438px;
+        height:255px;
+        position: absolute;
+        right: 50px;
+        top: 80px;
+        border-radius: 5px;
+      }
+      #pic3{
+        position: absolute;
+        right: 80px;
+        top: 360px;
+        padding: 0;
+      }
+      .container-flow{
+        background-color: rgb(245,245,245);
+      }
+    </style>
+<div class="container-flow " >
+  <style>
+        /* 二级菜单 */
+        .side_ul2{
+          /* height: 100px; */
+          /* 弹性布局(重要) */
+          /* 边框 */
+          border-bottom: 2px solid rgb(219,227,239);
+          border-left: 2px solid rgb(219,227,239);
+          border-right: 2px solid rgb(219,227,239);
+          /*margin-top: 20;*/
+          margin-left: 34;
+          display :flex;
+          flex-direction:column;
+          /* width: 300px; */
+          /*圆角 */
+          /* border: 1px solid black; */
+          /* 阴影 */
+          z-index: 1;
+            /* 背景白色 */
+            background-color: white;
+         }
+       /* 二级标签 */
+       .side_li2{
+        color:black;
+        margin-left: 0px;
+        padding-left: 30px;
+        /*
+        */
+          height: 33px;
+        /* 垂直居中 */
+        line-height: 33px;
+        /* border: solid black 1px; */
+        /* 字体左对齐 */
+        text-align: left;
+        z-index: 2;
+          /* 背景白色 */
+          background-color: white;
+           /*圆角 */
+        border-radius:0px 0px 5px 5px;
+          /* height: 200px;
+          width: 200px; */
+          /* position: absolute; */
+          /* left: 0; */
+          /* padding: 0; */
+       }
+       .side_li2:hover{
+        background-color: rgb(245,245,245);
+       }
+       .side_li2>a{
+        margin-left: 10px;
+        font-size: 5px;
+        color: black;
+       }
+       .side_li2>a:hover{
+          height: 33px;
+           font-size: 5px;
+         /* 橙色字体 */
+           color:rgb(251,171,179);
+       
+       }
+    .container-flow{
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 0px;
+    }
+    .categries{
+      border-top: rgb(191,30,24) solid 3px;
+      border-bottom: rgb(245,245,245) solid 2px;
+      text-align: center;
+    }
+    .categries>span{
+      line-height: 55px;
+      font-size: 17px;
+    }
+  </style>
+   <!-- 二级下拉菜单  position:absolute;bottom: 0; -->
+    <ul class="side_ul2" style="width:218px;height: 754px;">
+      <!-- <li><img src="/static/img/product_categories.png" alt=""></li> -->
+      <li class="categries" style="height:55px"><span style="color: rgb(191,30,24) ;">Product Categories</span></li>
+      <li class="side_li2" style="height:30px;"><a href="https://fobwerks.en.alibaba.com/productlist.html?spm=a2700.shop_plgr.88.7">See all categories</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-927192175/Engine_overhaul_package.html?spm=a2700.shop_plgr.88.23">Engine overhaul package</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-924254902/Fuel_Line_Quick_Connector.html?spm=a2700.shop_plgr.88.24.45db6b0eJ16Oed">Fuel Line Quick Connector</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-924283865/VVT_Valve.html?spm=a2700.shop_plgr.88.25.45db6b0eJ16Oed">VVT Valve</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-923803445/Clutch_Slave_Cylinder.html?spm=a2700.shop_plgr.88.26.45db6b0eJ16Oed">Clutch Slave Cylinder</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-924691587/Gasket.html?spm=a2700.shop_plgr.88.27.45db6b0eJ16Oed">Gasket</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-924154283/CAP.html?spm=a2700.shop_plgr.88.42.45db6b0eJ16Oed">CAP</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-924053358/PCV_Valves.html">PCV Valves</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-907277183/Fuel_System.html">Fuel System</a></li>
+      <li class="side_li2"><a   href="https://fobwerks.en.alibaba.com/productgrouplist-823149698/Ignition_Parts.html">Ignition Parts</a></li>
+      <li class="side_li2"><a  href="https://fobwerks.en.alibaba.com/productgrouplist-907204828/Filters.html">Filters</a></li>
+      <li class="side_li2"><a  href="https://fobwerks.en.alibaba.com/productgrouplist-0/Ungrouped.html">Ungrouped</a></li>
+    </ul>
+
+</div>
+      {%include 'copyright.html'%}
+
+  </body>
+  <footer>
+    
+    {%include 'footer.html'%}
+    
+  </footer>
+</html>

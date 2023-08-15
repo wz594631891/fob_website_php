@@ -1,0 +1,318 @@
+   <!-- 导入常用js bootsrap jQuery -->
+  
+    
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<!-- {% load static %} -->
+<!-- <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script> -->
+<!-- 导入vue2 -->
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js"></script>
+<!-- <script src="/static/js/vue.js"></script> -->
+
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+ 
+<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="/static/css/bootstrap.css" rel="stylesheet"> -->
+ 
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+ 
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script src="/static/js/bootstrap.js"></script> -->
+<!-- #TODO汽车轮播图CSS -->
+<style>
+ /* 移入变大1.05:四产品&推荐15产品 */
+.four_goods div:hover, #fifteen_goods_line3 div:hover,#fifteen_goods_line2 div:hover,#fifteen_goods_line1 div:hover{
+  transform: scale(1.05);
+  transition: transform 1s ;
+ }
+ /* 移入上升:9大类目 */
+.classification div:hover{
+  transform: translateY(-15px);
+  transition: transform 1s ;
+ }
+  /* 底部汽车轮播图动画:向左平移图片:左边距0->-1200 */
+  @keyframes scrollPic0to-1200{
+  /* 从左边距0 */
+  from{margin-left: 0px;}
+  /* 到左边距-1900 */
+  to{margin-left: -1200px;}
+}
+/* 轮播图动画:向左平移图片:左边距-1900到-2400 */
+@keyframes scrollPic-1200to-2400{
+/* 从左边距0 */
+from{margin-left: -1200px;}
+/* 到左边距-1900 */
+to{margin-left: -2400px;}
+} 
+/* 轮播图动画:向右平移图片:左边距-2400到-1200 */
+@keyframes scrollPic-2400to-1200{
+  /* 从左边距0 */
+  from{margin-left: -2400px;}
+  /* 到左边距-1900 */
+  to{margin-left: -1200px;}
+}
+/* 轮播图动画:向右平移图片:左边距-1200到0 */
+@keyframes scrollPic-1200to0{
+  /* 从左边距0 */
+  from{margin-left: -1200px;}
+  /* 到左边距-1900 */
+  to{margin-left: 0px;}
+}
+</style>
+<style>
+  /* 轮播图动画(营业执照):向左平移图片:左边距0->-1900 */
+  @keyframes scrollPic0to-1096{
+  /* 从左边距0 */
+  from{margin-left: 0px;}
+  /* 到左边距-1900 */
+  to{margin-left: -1096px;}
+}
+/* 轮播图动画:向左平移图片:左边距-1900到-2192 */
+@keyframes scrollPic-1096to-2192{
+/* 从左边距0 */
+from{margin-left: -1096px;}
+/* 到左边距-1900 */
+to{margin-left: -2192px;}
+} 
+/* 轮播图动画:向右平移图片:左边距-2192到-1096 */
+@keyframes scrollPic-2192to-1096{
+  /* 从左边距0 */
+  from{margin-left: -2192px;}
+  /* 到左边距-1900 */
+  to{margin-left: -1096px;}
+}
+/* 轮播图动画:向右平移图片:左边距-1096到0 */
+@keyframes scrollPic-1096to0{
+  /* 从左边距0 */
+  from{margin-left: -1096px;}
+  /* 到左边距-1900 */
+  to{margin-left: 0px;}
+}
+</style>
+    <!-- 瞬大动画(爱心;支持JS在页脚) -->
+    <style>
+      /* 定义动画 */
+      @keyframes bigSmall{
+        /* 变大1.5倍:transform:scale(倍数) */
+        from{cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color:rgb(204,86,1);;vertical-align: middle;display:inline-block;font-size: 15;transform: scale(1.5);}
+        /* 回到原样 */
+        to{cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(204,86,1);;;vertical-align: middle;display:inline-block;font-size: 15;}
+      }
+    </style>
+      <!-- 气泡框 -->
+            <!-- css -->
+            <style>        
+              .box {
+                width: 20%;
+                height: 300px;
+                /* margin-left: 0px;
+                margin-top: 0px; */
+                position: relative;
+                z-index: 7;
+                display:none
+            }
+            .triangle {
+                width: 0;
+                height: 0;
+                border:   solid 10px ;
+                border-color: transparent transparent  white;
+                /* border-top-color: #aeaeae; */
+                margin-left: 15px;
+                z-index: 7;
+                display:none
+            }
+            .cont {
+                width: 300px;
+                height: 170px;
+                background-color: white;
+                border-radius: 5px;
+                margin-top: 16;
+                z-index: 7;
+                display:none
+            }
+          </style>  
+    <!-- 网页图标 -->
+    <!-- <link  href="https://g.csdnimg.cn/static/logo/favicon32.ico"  rel="shortcut icon" type="image/x-icon" /> -->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://g.csdnimg.cn/static/logo/favicon32.ico" media="screen" /> -->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico" media="screen" /> -->
+    <!-- <link rel="shortcut icon" href="/static/img/favicon.ico"> -->
+<style>
+  /* 轮播图CSS */
+    /* 淡入动画:从透明度0到100透明度(目标透明度)(箭头) */
+    @keyframes fadein0to1{
+      from{
+        opacity: 0;
+      }
+      to{
+        opacity: 1;
+      }
+    }
+        /* 淡出动画:从透明度100到0透明度(目标透明度)(箭头) */
+        @keyframes fadeout0to1{
+      from{
+        opacity: 1;
+      }
+      to{
+        opacity: 0;
+      }
+    }
+
+
+  /* 菜单CSS */
+     /* 第一个li的左边距 */
+     #one{       
+       margin-left:350px
+     }
+     
+     a{
+       /*文本颜色*/
+       color:white;
+       /*去掉链接初始样式(去掉下划线)*/
+       text-decoration:none;
+     }
+     /* 一级菜单样式 */
+     ul1>a:hover{
+       /*文本颜色*/
+       color:white;
+       /*去掉链接初始样式(去掉下划线)*/
+       text-decoration:none;
+     }
+    /*  一级标签标签默认样式 */
+    .li1{
+      /*标签转换为左浮动(左对齐)*/
+       float:left;
+      /*高和宽(基于截图测量)*/
+       height:45px;
+       width:100px;
+      /*去掉初始样式(去掉*xxxxx *xxxx)*/
+       list-style:none; 
+      /*水平居中*/
+       text-align:center;
+      /*行高:当行高=标签高度时,文本垂直居中*/
+       line-height:45px; 
+       z-index: 6;
+     
+       
+     }
+     /* 鼠标移入变成深蓝色*/
+     .li1:hover{
+       background-color:rgb(171,10,4);
+     } 
+     /*一级菜单:横向导航栏:背景色和高宽  */
+     .ul1{       
+       background-color:rgb(191,30,24);
+       /* width:100%; */
+       width: 1900px;;
+       height:45px;
+       margin:0px;
+       z-index: 6;
+     }
+     
+     /* 二级菜单 */
+     .ul2{
+      bottom: 0;
+      /* height: 100px; */
+      list-style: none;
+      /* 弹性布局(重要) */
+      display :flex;
+      flex-direction:column;
+      /* width: 300px; */
+      /* 默认隐藏 */
+      display: none;
+      /*圆角 */
+      border-radius:5px;
+      /* border: 1px solid black; */
+      /* 阴影 */
+      box-shadow:2px 2px 5px rgb(226,226,226);
+      z-index: 1;
+        /* 背景白色 */
+        background-color: white;
+     }
+   
+     /* 二级标签 */
+     .li2{
+        list-style: none;
+        height: 30px;
+      /* 垂直居中 */
+      line-height: 30px;
+      /* border: solid black 1px; */
+      /* 字体左对齐 */
+      text-align: left;
+      z-index: 6;
+        /* 背景白色 */
+        background-color: white;
+         /*圆角 */
+      border-radius:0px 0px 5px 5px;
+        /* height: 200px;
+        width: 200px; */
+        /* position: absolute; */
+        /* left: 0; */
+        /* padding: 0; */
+     }
+     /* 鼠标移入二级标签样式 */
+     .li2:hover{
+      /* 灰色背景 */
+      background-color: rgb(243,244,248);
+      /* 下划线 */
+      text-decoration: underline;
+    
+      ;
+     }
+   
+    
+    /* 二级菜单链接:文字大小和颜色 */
+     .li2>a{
+      font-size: 5px;
+    color: black;
+    margin: 23px;
+    }
+    .li2>a:hover{
+      font-size: 5px;
+      /* 橙色字体 */
+      color:rgb(251,171,179);
+      
+    }
+     /* .menu-box ul {
+	padding: 0;
+  
+} */
+ul,li {
+	list-style: none;
+  padding: 0px;
+  /* border: solid black 1px; */
+}
+
+    </style>
+    <!-- 轮播图CSS动画 -->
+     <style>
+      /* 轮播图动画:向左平移图片:左边距0->-1900 */
+      @keyframes scrollPic0to-100{
+      /* 从左边距0 */
+      from{margin-left: 0;}
+      /* 到左边距-1900 */
+      to{margin-left: -1900px;}
+    }
+    /* 轮播图动画:向左平移图片:左边距-1900到-2192 */
+   @keyframes scrollPic-100to-200{
+    /* 从左边距0 */
+    from{margin-left: -1900px;}
+    /* 到左边距-1900 */
+    to{margin-left: -3800px;}
+   } 
+   /* 轮播图动画:向右平移图片:左边距-2192到-1096 */
+    @keyframes scrollPic-200to-100{
+      /* 从左边距0 */
+      from{margin-left: -3800px;}
+      /* 到左边距-1900 */
+      to{margin-left: -1900px;}
+    }
+   /* 轮播图动画:向右平移图片:左边距-1096到0 */
+    @keyframes scrollPic-100to0{
+      /* 从左边距0 */
+      from{margin-left: -1900px;}
+      /* 到左边距-1900 */
+      to{margin-left: 0;}
+    }
+  </style>
+    
+    <!-- 标题 -->
+    <title>Fob Auto Parts Co., Ltd.</title>

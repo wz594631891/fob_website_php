@@ -1,0 +1,2407 @@
+<html>
+  <head>
+  <!-- {%include 'head.html'%} -->
+  <script src="static/js/jquery.js"></script>
+<header id="headContent"></header>
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js"></script>
+<script src="/static/js/vue.js"></script>
+
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+ 
+<!-- <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+ 
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+ 
+<!-- <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<script src="/static/js/bootstrap.js"></script>
+
+</head>
+<body >
+  <!-- {%include 'top.html'%} -->
+  		<header id="topContent"></header>
+   
+    <!-- 大盒子:背景图  :background-size: 1900px 726px;-->
+    <!-- <div class="container-fluid" style="background-size: 1900px ;background-image: url('/static/img/背景图.jpg');"> -->
+    <div  style="margin-left: 0;margin-right: 0;width:1900;background-image: url('/static/img/背景图.jpg');">
+      <table style="width:100%;">
+        <tr style="width:100%;">
+          <td style="width:100%;">
+          <!-- 轮播图css -->
+            <style>
+              #box{
+                 /* width:  1900px; */
+                 width:  100%;
+                 height: 726px;
+                 border: 1px solid #000;
+                 /* //超出隐藏 */
+                 overflow: hidden;  
+                 
+                }
+                /* 轮播图图片 */
+                .scrollPic{
+                  float:left;
+                  /* width:  100%; */
+                width:  1900px;
+                 height: 726px;
+                 
+              }
+              /* 轮播图动画:向左平移图片:左边距0->-1900 */
+              @keyframes scrollPic{
+                /* 从左边距0 */
+                from{margin-left: 0px;}
+                /* 到左边距-1900 */
+                to{margin-left: -1900px;}
+              }
+              /* 轮播图动画:向左平移图片:左边距-1900到-3800 */
+             @keyframes scrollPic-1900to-3800{
+              /* 从左边距0 */
+              /* from{margin-left: -100%;} */
+              from{margin-left: -1900px;}
+              /* 到左边距-1900 */
+              to{margin-left: -3800px;}
+             } 
+             /* 轮播图动画:向右平移图片:左边距0<--1900:用于圆点点击 */
+              @keyframes scrollPic0to100{
+                /* 从左边距0 */
+                from{margin-left: 0px;}
+                /* 到左边距-1900 */
+                to{margin-left: 1900px;}
+              }
+
+
+            </style>
+      
+          
+              <div id="box" style="position: relative;display:flex;overflow: hidden;width: 1900px;">
+                  <img style="width:1900px" class="scrollPic" src="/static/img/轮播图1.jpg" alt="" id="img1">
+                  <img style="width:1900px"  class="scrollPic" src="/static/img/轮播图2.jpg" alt="" id="img2">
+                  <!-- 假的第三张 -->
+                  <img style="width:1900px"  class="scrollPic" src="/static/img/轮播图1.jpg" alt="" id="img3">
+                  <!-- 左箭头 -->
+                  <div class=" arrow leftArrow" style="cursor:pointer;display: none;width: 112;height: 112;position: absolute;display: block;z-index: 6;top:303;left: 150px;"><img class="arrow leftArrow" style="opacity: 0;" src="https://img.alicdn.com/imgextra/i2/3528491912/TB2nbyHogmTBuNjy1XbXXaMrVXa_!!3528491912.png" ></div>
+                  <!-- 右箭头 -->
+                  <div class="arrow rightArrow" id="rightArrow" style="cursor:pointer;display: none;width: 112;height: 112;position: absolute;display: block;z-index: 6;top:303;right: 150px;"><img style="opacity: 0;" class="arrow rightArrow" src="https://img.alicdn.com/imgextra/i2/3528491912/TB2_YXjoDJYBeNjy1zeXXahzVXa_!!3528491912.png" ></div>
+                  <!-- 圆点:两个 -->
+                  <div id="dot1" style="display:block;z-index: 7;left:49%;bottom: 20px;border-radius: 50%;position: absolute;display:inline-block;width: 20px;height: 20px;background-color: white;"></div>
+                  <div id="dot2" style="display:block;z-index: 7;left:51%;bottom: 20px;border-radius: 50%;position: absolute;display:inline-block;width: 20px;height: 20px;background-color: white;"></div>
+              </div>
+              <script>
+                /*移入box时显示箭头*/
+                // jquery hover事件 hover(鼠标移入,鼠标移出)
+                $('#box').hover(function(){
+                  // $('.arrow').css('display','block')
+                  $('.arrow').css('animation','fadein0to1 0.5s linear forwards')
+                  // 淡入
+                },function(){
+                  // $('.arrow').css('display','none')
+                  // 淡出
+                  $('.arrow').css('animation','fadeout0to1 0.5s linear forwards')
+                  
+                })
+              </script>
+              <!-- 轮播图JS -->
+             <script>
+               // 激活圆点样式函数:输入下标
+               function activate_dot(i){
+            
+                  if(i==0){
+                    //激活小园点1 失活小圆点2 
+                    $('#dot1').css('display','block')
+                    $('#dot2').css('display','none')
+                  }
+                  else if(i==1){
+                    //激活小园点2 失活小圆点1
+                    $('#dot1').css('display','none')
+                    $('#dot2').css('display','block')
+                  }
+                }
+                //0.入口函数:设圆点1为红色并且非透明
+                $(function(){
+                   //激活小园点1 失活小圆点2 
+                   activate_dot(0)
+                })
+
+                // 一.左箭头点击事件0503:ok
+                $('.arrow:eq(0)').click(function(){
+                  // 获取左箭头
+                  var leftRedArrow= $('.arrow:eq(0)')
+                  // 获取图片1
+                  var certificate1=$('.scrollPic:eq(0)')
+                  var marginLeft=$('.scrollPic:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('.scrollPic:eq(0)').css('marginLeft').replace('px','')-1900+'px'
+                  console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2192,-1096,0)
+                  // 当边距为0:0到-1096 
+                  if(marginLeft==0){
+                    console.log('左边距0')
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-100 1s forwards')
+                    // 激活对应小圆点:2
+                    activate_dot(1)
+                  }
+                  // 当边距为-1096:-1096到-2192 
+                 else if(marginLeft==-1900){
+                    console.log('左边距-1900')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-100to-200 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activate_dot(0)
+                  }
+                  //当边距为-2192:2192并回到0,并拉动0到-1096 
+                  else if(marginLeft==-3800){
+                    console.log('左边距-2192')
+                    certificate1.css('marginLeft','0')//回到0
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-100 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:2
+                    activate_dot(1)
+                    
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    console.log('左边距不是0,-1900,-3800')
+                  }
+                })
+                // 二.右箭头点击事件
+                $('#rightArrow').click(function(){
+                  // 获取右箭头
+                  var rightRedArrow= $('#rightArrow')
+                  // 获取图片1
+                  var certificate1=$('.scrollPic:eq(0)')
+                  var marginLeft=$('.scrollPic:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('.scrollPic:eq(0)').css('marginLeft').replace('px','')+1900+'px'
+                  console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2192,-1096,0)
+                  // 当边距为0:切换到-2192 ,从-2192到-1096
+                  if(marginLeft==0){
+                    console.log('边距为0:切换到-3800 ,从-3800到-1900')
+                    certificate1.css('marginLeft','-3800')//切换到-2192
+                    // 用动画:从-2192到-1096
+                    certificate1.css('animation','scrollPic-200to-100 1s forwards')
+                    // 激活对应小圆点:2
+                    activate_dot(1)
+                  }
+                  // 当边距为-1096:-1096到0   
+                  else if(marginLeft==-1900){
+                    console.log('左边距-1900')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-100to0 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activate_dot(0)
+                    
+                  }
+                  //当边距为-3800:-3800到-1900
+                  else if(marginLeft==-3800){
+                    console.log('左边距-2192')
+                    // 用动画:从-2192到-1096
+                    certificate1.css('animation','scrollPic-200to-100 1s forwards')                    
+                    // 激活对应小圆点:2
+                    activate_dot(1)
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    console.log('左边距不是0,-1096,-2192无动作')
+                  }
+                })
+              /*
+              原理:拉动第一张图0->-1900->-3800-.自动带动后面的图左边距到达-3800时回到原点0,配合两个动画实现
+              三张图片:2张轮播图,第三张为假图(实际第一张图)
+              */ 
+              /**轮播图:图片&圆点JS**/
+              // 获取3张图片
+              var img1=$('#img1')
+              var img2=$('#img2')
+              var img3=$('#img3')
+              var i=0
+              var runLubo=true;//启动标记
+              // setInterval(function(){
+                
+                setInterval("lubo()",2000);
+                function lubo(){
+                  if (runLubo==false){
+                   return '停止轮播图'
+                  }
+                  // img1.css('marginLeft',i+'px')
+                  if (i==0){
+                    // 拉动第一张图0->-1900
+                    img1.css('animation','scrollPic 2s ')
+                    // 展现第1张图时隐藏圆点2
+                    // console.log('展现图1隐藏圆点2显示圆点1')
+                    $('#dot1').css('display','block')
+                    $('#dot2').css('display','none')
+                  }
+                  else if(i==-1){
+                    //拉动第一张图 -1900->-3800
+                    img1.css('animation','scrollPic-1900to-3800 2s ')
+                    // 展现第二张图时隐藏圆点1
+                    // console.log('展现图2隐藏圆点1显示圆点2')
+                    $('#dot1').css('display','none')
+                    $('#dot2').css('display','block')
+                  }
+                  // console.log('图1:',img1.css('marginLeft'))
+                  // console.log('图2:',img2.css('marginLeft'))
+                  // console.log('图3:',img3.css('marginLeft'))
+                  i-=1;
+                  if(i==-1*3){
+                    i=0
+                    // 展现第1张图时隐藏圆点2
+                    // console.log('展现图1隐藏圆点2显示圆点1')
+                    $('#dot1').css('display','block')
+                    $('#dot2').css('display','none')
+                  }
+                }
+               
+                    
+                
+             </script>
+              <script>
+                /* 圆点JS*/
+                // 根据img1的左边距判断现在展现哪张图确定亮哪个圆点:-1900px时展现图2,否则是图1
+                var img1=$('#img1')
+                // 展现第二张图时隐藏圆点1
+                if(img1.css('marginLeft')=='-1900px'){
+                  // console.log('展现图2隐藏圆点1显示圆点2')
+                  $('#dot1').css('display','none')
+                  $('#dot2').css('display','block')
+                }else{
+                  // 展现第1张图时隐藏圆点2
+                  // console.log('展现图1隐藏圆点2显示圆点1')
+                  $('#dot1').css('display','block')
+                  $('#dot2').css('display','none')
+                }
+              </script>
+          </td>
+      </tr>
+    </table>
+    
+    <!-- 详情页CSS:整体布局 -->
+    <style>
+      table:last-child{
+        width: 1200px;
+      }
+    </style>
+    <!-- 三.详情页 -->
+    <table class="container">
+      <!-- 1.多国国旗条 -->
+      <tr>
+        <td>
+          <!-- 国旗条CSS:移入上移10px -->
+          <!-- <style>
+            #flags>div:hover{
+              transform:translateY(-10px);
+              transition:2s linear 
+            }
+          </style> -->
+          <div id="flags" style="display: flex;margin-left: 0px;"><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="https://fobwerks.en.alibaba.com/de_DE/?spm=a2700.shop_index.204728.1.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" ><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2_XYcoXGWBuNjy0FbXXb4sXXa_!!3528491912.png" style="width: 66px; height: 77px;" ></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/pt_PT/?spm=a2700.shop_index.204728.2.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.2"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2ynh9fZyYBuNkSnfoXXcWgVXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/es_ES/?spm=a2700.shop_index.204728.3.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.3"><img src="https://img.alicdn.com/imgextra/i3/3528491912/TB2wjszonlYBeNjSszcXXbwhFXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/fr_FR/?spm=a2700.shop_index.204728.4.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.4"><img src="https://img.alicdn.com/imgextra/i4/3528491912/TB2E_qUobSYBuNjSspiXXXNzpXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/it_IT/?spm=a2700.shop_index.204728.5.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.5"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2MzaSf98YBeNkSnb4XXaevFXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/ru_RU/?spm=a2700.shop_index.204728.6.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.6"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2npYcoXGWBuNjy0FbXXb4sXXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/ko_KR/?spm=a2700.shop_index.204728.7.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.7"><img src="https://img.alicdn.com/imgextra/i3/3528491912/TB2GNlUoDtYBeNjy1XdXXXXyVXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/ja_JP/?spm=a2700.shop_index.204728.8.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.8"><img src="https://img.alicdn.com/imgextra/i2/3528491912/TB2jbTgobuWBuNjSszgXXb8jVXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/ar_SA/?spm=a2700.shop_index.204728.9.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.9"><img src="https://img.alicdn.com/imgextra/i3/3528491912/TB2n1iWokKWBuNjy1zjXXcOypXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/th_TH/?spm=a2700.shop_index.204728.10.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.10"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2ZfGnf5OYBuNjSsD4XXbSkFXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/vi_VN/?spm=a2700.shop_index.204728.11.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.11"><img src="https://img.alicdn.com/imgextra/i4/3528491912/TB2hEOff3KTBuNkSne1XXaJoXXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/tr_TR/?spm=a2700.shop_index.204728.12.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.12"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2CyeIf_XYBeNkHFrdXXciuVXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/nl_NL/?spm=a2700.shop_index.204728.13.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.13"><img src="https://img.alicdn.com/imgextra/i2/3528491912/TB2pbHjoaSWBuNjSsrbXXa0mVXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/in_ID/?spm=a2700.shop_index.204728.14.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.14"><img src="https://img.alicdn.com/imgextra/i4/3528491912/O1CN01t1QxIT1Pzk3Z2Doaq_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/iw_IL/?spm=a2700.shop_index.204728.15.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.15"><img src="https://img.alicdn.com/imgextra/i2/3528491912/TB2HtHKob1YBuNjSszhXXcUsFXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div><div class="yu_tp" style="width: 66px; height: 77px; margin-left: 8px; margin-top: 42px;"><a href="//fobwerks.en.alibaba.com/hi_IN/?spm=a2700.shop_index.204728.16.4abb69f0uU3riv" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.204728.16"><img src="https://img.alicdn.com/imgextra/i2/3528491912/TB2cTPToeuSBuNjy1XcXXcYjFXa_!!3528491912.png" style="width: 66px; height: 77px;"></a></div></div></td>
+      </tr>
+      <!-- 国旗条移入移出JS -->
+      <!-- transform:translateY(-10px);
+      transition:2s linear  -->
+      <script>
+        // 移入上移10px
+        $('.yu_tp').hover(function(){
+          $(this).children().children().css('transform','translateY(-10px)')
+          $(this).children().children().css('transition','1s linear')
+        },function(){
+          $(this).children().children().css('transform','translateY(0px)')
+          $(this).children().children().css('transition','1s linear')
+
+        })
+      </script>
+      <!-- 2.产品画廊 -->
+      <!-- 产品画廊CSS:移入左右弹跳动画效果 -->
+      <style>
+        /* 左右弹跳:0%左移5px-33%原位-66%左移2px-100%原位 */
+        @keyframes jumpLeft{
+          0%{
+            transform: translateX(-5px);
+          }
+          33%{
+            transform: translateX(0px);
+          }
+          66%{
+            transform: translateX(-2px);
+            
+          }
+          100%{
+            transform: translateX(0px);
+
+          }
+        }
+        /* 图片调用动画:移入弹跳 */
+        .gallery:hover{
+          animation:jumpLeft 1s linear
+        }
+        /* 作用于子元素 */
+        .gallery:hover>span{
+          animation:jumpLeft 1s linear
+        }
+        /* 产品文字:白色;内联块
+        .gallery_text{
+          animation:jumpLeft 1s linear;
+          display: inline-block;
+          color: #ffffff;
+        } */
+      </style>
+      
+   
+
+      <tr>
+        <td><div class="yu_bb" style="margin-top: 100;position: relative;width: 1200;height: 460;"><div class="yu_xzztp">
+          <!-- (1)产品框1 -->
+          <div class="gallery yu_xzzxbb" style="position:absolute;width: 300;height: 300;top:0;left:0;margin-top: 2px;"><a href="https://fobwerks.en.alibaba.com/product/1600733938270-822096717/84306_0K050_Sensor_For_Toyota_Hilux_Innova_Fortuner_Auto_Sensors.html?spm=a2700.shop_index.207672.2.4a2769f0FFJ2Oy" target="_blank"><img width="299" height="299" src="https://sc04.alicdn.com/kf/H52687066ed364b6cb1a29717a1f764aft/84306-0K050-Sensor-For-Toyota-Hilux-Innova.jpg_350x350.jpg"  ></a></div><a href="https://fobwerks.en.alibaba.com/" target="_blank"><div class="yu_xzzstp" style="margin-top: 2px;position:absolute;width: 160;height: 160;left:140;bottom:0"><div class="yu_xzzstp_tp">
+            <!-- BEST SALE 红图-->
+            <img class="gallery"  width="159" height="157" style="margin-top: 2px;" src="https://img.alicdn.com/imgextra/i1/3528491912/TB2IEV3pXGWBuNjy0FbXXb4sXXa_!!3528491912.jpg">
+              <!-- BEST SALE文字  -->
+              <span class="gallery_text"  style="font-size: 18;z-index: 8;display: inline-block;position: absolute;left:36;top:60">BEST SALE</span></div><div class="yu_xzzstpwz"></div></div></a></div><div class="yu_xzjtp" style="margin-top: 0px;"><a href="https://fobwerks.en.alibaba.com/" target="_blank"><div class="yu_xzjxtp" style="position:absolute;width: 300;height: 160;top:0;left:300;"><div class="yu_xzjxtp_tp">
+                <!-- QUALITY ASSURANCE红图&文字 -->
+                <img class="gallery" src="https://img.alicdn.com/imgextra/i4/3528491912/TB2ycd.pbuWBuNjSszgXXb8jVXa_!!3528491912.jpg"><span  class="gallery_text"  style="font-size: 18;position: absolute;top:60;left:60">QUALITY ASSURANCE</span></div><div class="yu_xzjxtpwz" >
+                </div></div></a>
+                <!-- 产品框2 -->
+                <div class="gallery yu_xzjsbb" style="position:absolute;width: 300;height: 300;bottom: 0;left:300;margin-top: 2px;"><a href="https://fobwerks.en.alibaba.com/product/1600733274082-822269228/1825899C93_Camshaft_Position_Sensor_For_Ford_Cam_Position_Sensor.html?spm=a2700.shop_index.207672.3.4a2769f0FFJ2Oy" target="_blank" ><img height="299" width="299" src="//sc04.alicdn.com/kf/H3f9a6a648c0d47f88cd53032ccb96c85a/1825899C93-Camshaft-Position-Sensor-For-Ford-Cam.jpg_350x350.jpg"></a></div></div><div class="yu_xztp">
+                  <!-- 产品框3 -->
+                  
+                  <div class="gallery yu_xzxbb" style="position:absolute;width: 300;height: 300;top:0;left:600;margin-top: 2px;"><a href="https://fobwerks.en.alibaba.com/product/1600121238667-826766713/28163171_96476979_96476983_55561655_55570160_Ignition_Coil_For_Chevrolet_Aveo_Cruze_Sonic_Trax_Pontiac_Bobina_De_Encendido.html?spm=a2700.shop_index.207672.4.4a2769f0FFJ2Oy" target="_blank"><img width="299" height="299" src="//sc04.alicdn.com/kf/H7d3a5f79af7c42c18bad9783d57d3faeM/28163171-96476979-96476983-55561655-55570160-Ignition-Coil.jpg_350x350.jpg"></a></div><a target="_blank"><div class="yu_xzstp" style="margin-top: 2px;"><img src="//sc02.alicdn.com/kf/H01941f37721f4746b77229a24f28f098L.png"></div></a></div><div class="yu_xzztp1"><a target="_blank"><div class="yu_xzzstp1" style="position:absolute;width: 160;height: 160;top:0;left:900; margin-top: 2px;"><div class="yu_xzzstp1_tp">
+                    <!-- GOOD SERVICE红图&文字 -->
+                    <img class="gallery" src="https://img.alicdn.com/imgextra/i4/3528491912/TB2ZMR9paSWBuNjSsrbXXa0mVXa_!!3528491912.jpg"></div><div class="yu_xzzstpwz1"><span  class="gallery_text"  style="font-size: 18;position: absolute;top:60;left:6">GOOD SERVICE</span></div></div></a>
+                    
+                    <!-- 产品框4 -->
+                  <div   class="gallery yu_xzzxbb1" style="position:absolute;width: 300;height: 300;right:0;bottom:0;"><a href="https://fobwerks.en.alibaba.com/product/1600806226945-906974549/Factory_Price_Auto_Engine_Gasoline_Fuel_Filter_15410_77500_For_Suzuki.html?spm=a2700.shop_index.207672.5.4a2769f0FFJ2Oy" target="_blank" data-spm-anchor-id="a2700.shop_index.207672.5"><img  width="299" height="299"  src="//sc04.alicdn.com/kf/Hab2974ad99f94619bb2e74a6815f7480S/Factory-Price-Auto-Engine-Gasoline-Fuel-Filter.jpg_350x350.jpg"></a></div></div></div></td>
+      <!-- 文字摇晃JS-->
+      <script>
+        $('.gallery').hover(function(){
+          $('.gallery_text').css('animation','jumpLeft 1s linear')
+          $('.gallery_text').css('color','white')
+        },function(){
+          console.log('摇晃文字')
+        })
+      </script>
+      </tr>
+      <tr>
+        <td style="width: 1200;margin-top: 100;display: flex;flex-direction: column;border: 1px solid red;background-color: #000;border-top:none;border-bottom:none;height: 994px;">
+          <!-- 顶部分割线:红色 -->
+          <hr style='background-color:red; height:1px; border:none;width: 1100;margin-top: 0;'>
+          <!-- our advantages文字 -->
+          <div style="margin-top: 0;"><img src="/static/img/our_advantages.png" alt=""></div>
+          <div >
+            <center>
+              <!-- 视频CSS -->
+              <style>
+                video{
+                  width: 1100;
+                  height: 100%;
+                  object-fit: contain;
+                  }
+                  video:focus {
+                  outline:none;
+                  }
+              </style>
+            <!-- 视频:poster:视频封面 0501:添加白边添加CSS防止黑边 -->
+            <video src="/static/vid/environment.mp4" poster="/static/img/video_poster.png"  width="1100" height="630" muted controls="controls" style="border: #ffffff 7px solid;" ></video></center>
+          </div>
+          
+           
+
+        </td>
+        <!-- 红线下框 -->
+        <tr><td><div style="margin-bottom: -500px;padding-bottom: -28 ;"><img src="/static/img/blk_banner2.png" alt=""></div></td></tr>
+      </tr>
+    </table>
+    <!-- 黑色背景图盒子 -->
+    <div style="background-color: black;">
+     <table class="container">
+      <tr>
+        <!-- 奖杯手书图标&字 -->
+        <!-- 奖杯手书图标&字CSS -->
+        <style>
+          /* 红色方块 */
+          .red_block{
+            margin-top: 20;
+            margin-bottom: 20;
+          }
+          /* 标题文字1-3框 */
+         .yu_wz{margin-top: 30;}
+         /* 标题文字1-3:放大 */
+         b{font-size: 20;}
+          /* 三个的外框:长宽 */
+          .yu_tp{
+            width: 360;height:395;
+          }
+          /* 外框晃动:调用动画 */
+          .yu_tp:hover{
+            animation:shake 0.2s linear
+          }
+          /* 晃动动画:旋转两次:0%旋转33%返回66%旋转100%返回 度数:*/
+          @keyframes shake{
+            0%{
+              transform: rotate(5deg);
+            }
+            33%{
+              transform: rotate(0deg);
+            }
+            66%{
+              transform: rotate(2deg);
+            }
+            100%{
+              transform: rotate(0deg);
+            }
+
+          }
+        </style>
+        <td ><div class="container" style="width: 1200;;background-color: #000"><center>
+          <!-- 背景盒子 -->
+          <div style="margin-top: 100;display: flex;flex-direction: row; background-color: #000; height: 360;width: 1100;" class="yu_topcss">
+          <div  class="yu_tp" style="width: 360;height:395;">
+            <a href="https://fobwerks.en.alibaba.com/" target="_blank" rel="noopener noreferrer" >
+              <div class="yu_stp" style="display: block;">
+                <img src="https://img.alicdn.com/imgextra/i4/3528491912/TB2QSVlpH1YBuNjSszeXXablFXa_!!3528491912.png">
+              </div>
+              <div class="yu_wz" style="display: block;">
+                <!-- 文字1 -->
+                <span style="color: rgb(255, 255, 255);"><b>Quality assurance</b> </span>
+              </div><div class="red_block yu_ztp" style="display: block;">
+                <img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2vi2OhlyWBuNkSmFPXXXguVXa_!!3528491912.png"></div>
+                <div class="yu_xwz" style="display: block;"><span style="color: rgb(255, 255, 255);" >We have good quality. Wemust be quality  first and strictly control quality.</span></div></a></div>
+                <div class="yu_tp"><a href="about:blank?spm=a2700.shop_index.138788.2.4abb69f0Vqjqeg" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.138788.2"><div class="yu_stp" style="display: block;"><img src="https://img.alicdn.com/imgextra/i3/3528491912/TB2S2p2pHSYBuNjSspfXXcZCpXa_!!3528491912.png"></div><div class="yu_wz" style="display: block;">
+                  <!-- 文字2 -->
+                  <span style="color: rgb(255, 255, 255);"><b>Professional service</b>  </span></div><div class=" red_block yu_ztp" style="display: block;"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2vi2OhlyWBuNkSmFPXXXguVXa_!!3528491912.png"></div><div class="yu_xwz" style="display: block;"><span style="color: rgb(255, 255, 255);">Professional c ustomer service team.  Let you worry  free after sale.</span></div></a></div><div class="yu_tp"><a href="about:blank?spm=a2700.shop_index.138788.3.4abb69f0Vqjqeg" target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.138788.3"><div class="yu_stp" style="display: block;"><img src="https://img.alicdn.com/imgextra/i3/3528491912/TB2Dj41pUR1BeNjy0FmXXb0wVXa_!!3528491912.png"></div><div class="yu_wz" style="display: block;">
+                   <!-- 文字3 -->
+                    <span style="color: rgb(255, 255, 255);"><b>Competitive Price</b> </span></div>
+                  <div class="red_block yu_ztp" style="display: block;"><img src="https://img.alicdn.com/imgextra/i1/3528491912/TB2vi2OhlyWBuNkSmFPXXXguVXa_!!3528491912.png"></div><div class="yu_xwz" style="display: block;"><span style="color: rgb(255, 255, 255);">Our products are more cost-effective and have better competitiveness compared with other merchants</span></div></a></div></div></center></div></td>
+      </tr>
+      <tr style="margin-left: 0;padding-left:0">
+        <!-- 灰图new arrival -->
+        <td style=""><div class="yu_btcss container-fluid" style="position: relative;padding-left: 0;">
+          <span style="position: absolute;top:50%;left:45%;display:inline-block;z-index:8" >NEW ARRIVAL</span>
+          <!-- 图片填满:object-fit: fill -->
+          <img style="object-fit: fill;height: 100%;width: 100%;" src="https://img.alicdn.com/imgextra/i2/3528491912/TB2b5_Xo4SYBuNjSspjXXX73VXa_!!3528491912.jpg"><div class="yu_wz" ><div class="yu_xwz">
+            
+            </div></div></div></td>
+      </tr>
+      <tr><td>
+        
+      </td></tr>
+     
+      <tr>
+         <!-- pcv阀 -->
+         <style>
+          /* 图片宽度 */
+          .pcv_valve img{
+            width: 224;
+            /* height: 224; */
+          }
+          /* 文本溢出隐藏:clip直接隐藏;ellipsis:省略号 */
+          .pcv_valve .yu_bbjg{
+            text-overflow:clip;
+            height: 44px;
+            overflow: hidden;
+            position: relative;
+             
+
+          }
+          /* 红方块价格盒子 */
+          .yu_dztp{background-color: #000;}
+          /* 文字:标题 价格 */
+          .yu_bbjg span{
+            /* text-overflow:clip;
+            height: 44px; */
+            /* position: absolute; */
+            /* left: 50%;
+            right: 50%; */
+            /* font-size: 20px; */
+            /* text-align: center; */
+            /* color: lightgray; */
+           
+          }
+          .pcv_valve_title{
+            position: absolute;
+            font-size: 20px;
+            text-align: center;
+            color: lightgray;
+          }
+          /* 价格红方块盒子 */
+          .yu_bbdd{
+            position: relative;
+          }
+          /* 价格盒子 */
+          .pcv_valve .yu_bbhoverbbbt{
+            /* color: #ffffff;
+            position: absolute;
+            top: 0; */
+          
+          }
+          /* 价格父元素 */
+          .yu_bbdd{
+            position: relative;
+            z-index: 9;
+            width: 224px;
+            height: 40px;
+            bottom: 40px;
+
+          }
+          /* 价格 */
+          .yu_bbdd>span{
+            position:absolute;
+            z-index: 9;
+            bottom:0;
+            top:0;
+            left: 0;
+            right:0;
+            color: white;
+            margin:auto;
+            text-align: center;
+            line-height: 40px;
+
+          }
+          /* 起订量(默认隐藏) */
+          .min_order{
+              z-index: 8;
+              position: absolute;
+              top:50%;
+              left:20%;
+              color:white
+              /* display: none; */
+            }
+            /* 起订量幕布(红色)(默认隐藏) */
+            .red_curtain{
+              top:0;
+              background-color: red;
+              opacity: 0;
+              /* display: none; */
+              
+          }
+          /* 淡入动画:从透明度0到50透明度(目标透明度) */
+          @keyframes fadein{
+            from{
+              opacity: 0;
+            }
+            to{
+              opacity: 0.5;
+            }
+          }
+     
+          /* 淡出动画:从透明度50到0透明度(目标透明度) */
+          @keyframes fadeout{
+            from{
+              opacity: 0.5;
+            }
+            to{
+              opacity: 0;
+            }
+          }
+             /* 淡入动画:从透明度0到100透明度 从上移动到原位(产品组出现) */
+            @keyframes fadein0to1move{
+              from{
+                opacity: 0;
+                position: relative;
+                bottom: 50PX;
+                z-index: 9;
+                display: flex;
+              }
+              to{
+                opacity: 1;
+                position: relative;
+                bottom: 0;
+                z-index: 9;
+                display: flex;
+              }
+            }
+         </style>
+      
+         <!-- pcv阀 -->
+        <td>
+          <div id="pcv_valve" class="pcv_valve yu_bbxx" style="display: flex;">
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;position: relative;">
+                    <a href="https://www.alibaba.com/product-detail/PCV-Valve-12204-15030-for-Nissan_1600265933229.html?spm=a2700.shop_plser.41413.3.158e74c5ASPZVA" target="_blank" rel="noopener noreferrer">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="//sc04.alicdn.com/kf/H0e55ce4eb8474821a53f606c2f5fda65k/PCV-Valve-12204-15030-for-Nissan-CHEVROLET.jpg_350x350.jpg"
+                          data-spm-anchor-id="a2700.shop_index.88787.i3.4abb69f0mJVzyB"></div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                          <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:500</span></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">PCV Valve 12204-15030 for
+                      Nissan CHEVROLET NOVA GEO HONDA ACCORD MITSUBISHI MIRAGE NISSAN SENTRA 200SX</span></div>
+                  <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                      src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                      style="display: block;">
+                    <div class="yu_bbdd" style="display: block; ">
+                      <!-- 价格 -->
+                      <span>$0.35</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                      href="https://fobwerks.en.alibaba.com/product/1600731923607-924053358/11810_6N202_11810_EA200_PCV_Valve_Positive_Crankcase_Ventilation_For_Nissan_Infiniti.html?spm=a2700.shop_index.88787.2.4abb69f0mJVzyB"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.2">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="//sc04.alicdn.com/kf/Hd4b228864167472399cece05cab692f26/11810-6N202-11810-EA200-PCV-Valve-Positive.png_350x350.png">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                          <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:200</span></div>
+                      </div>
+                    </a></div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;">
+                    <!-- 标题 -->
+                    <span class="pcv_valve_title">11810-6N202 11810-EA200 PCV Valve Positive Crankcase Ventilation For Nissan Infiniti</span>
+                  </div>
+                  <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                      src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                      style="display: block;">
+                    <div class="yu_bbdd" style="display: block;">
+                      <!-- 价格 -->
+                      <span>$0.38 - $0.42</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                      href="https://fobwerks.en.alibaba.com/product/1600708602198-924053358/High_Quality_PCV_Valve_Positive_Crankcase_Ventilation_PCV_Valve_G23ZY.html?spm=a2700.shop_index.88787.3.4abb69f0mJVzyB"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.3">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="//sc04.alicdn.com/kf/Hbfbafced7ebb4a598a165a2f45d21263e/High-Quality-PCV-Valve-Positive-Crankcase-Ventilation.jpg_350x350.jpg">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                          <!-- 起订量 -->
+                          <span  class="min_order">MIN.ORDER:1000</span></div>
+                      </div>
+                    </a></div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">High Quality PCV Valve
+                      Positive Crankcase Ventilation PCV Valve G23ZY</span></div>
+                  <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                      src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                      style="display: block;">
+                    <div class="yu_bbdd" style="display: block">
+                      <!-- 价格 -->
+                      <span >$0.40 - $0.43</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                      href="https://fobwerks.en.alibaba.com//product/1600707693242-924053358/OEM_94582006_New_Positive_Crankcase_Ventilation_PCV_Valve_For_Daewoo.html?spm=a2700.shop_index.88787.4.4abb69f0mJVzyB"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.4">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="//sc04.alicdn.com/kf/Hd996102abd7a404ea50d3b9c04880746X/OEM-94582006-New-Positive-Crankcase-Ventilation-PCV.jpg_350x350.jpg">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                           <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:1000</span></div>
+                      </div>
+                    </a></div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+        
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">OEM 94582006 New Positive
+                      Crankcase Ventilation PCV Valve For Daewoo</span></div>
+                  <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                      src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                      style="display: block;">
+                    <div class="yu_bbdd" style="display: block;"><span>$0.40 - $0.42</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                      href="https://fobwerks.en.alibaba.com//product/1600707555974-924053358/OEM_55568437_New_Positive_Crankcase_Ventilation_PCV_Valve_For_Chevrolet_Cruze.html?spm=a2700.shop_index.88787.5.4abb69f0mJVzyB"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.5">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="//sc04.alicdn.com/kf/H4e53cb9606ea421cb7b1a0e7c77328fbY/OEM-55568437-New-Positive-Crankcase-Ventilation-PCV.jpg_350x350.jpg">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                           <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:1000</span></div>
+                      </div>
+                    </a></div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">OEM 55568437 New Positive Crankcase Ventilation PCV Valve For Chevrolet Cruze</span></div><div class="yu_dztp" style="display: block; margin-left: 0px;"><img src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png" style="display: block;"><div class="yu_bbdd" style="display: block;"><span>$0.69 - $0.72</span></div></div></div></div></div></div>
+                  
+                  <!-- 滤清器 -->
+           <div id="air_filter" class="pcv_valve yu_bbxx" style="display: flex;">
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;position: relative;">
+                    <a href="https://fobwerks.en.alibaba.com/product/1600737468114-906946063/Factory_Price_Car_Air_Filter_For_Kia_Hyundai_OEM28113_H8100_Filtro_De_Aire.html?spm=a2700.shop_index.88787.7.4a2769f0WjIbpX                    " target="_blank" rel="noopener noreferrer">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="https://sc04.alicdn.com/kf/Hf697f22734f74b69b343c10316c1e92bP/Factory-Price-Car-Air-Filter-For-Kia.jpg_350x350.jpg"
+                          data-spm-anchor-id="a2700.shop_index.88787.i3.4abb69f0mJVzyB"></div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                          <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:100</span></div>
+                        </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">Factory Price Car Air Filter For Kia Hyundai</span></div>
+                      <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                      src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                      style="display: block;">
+                    <div class="yu_bbdd" style="display: block; ">
+                      <!-- 价格 -->
+                      <span>&nbsp;&nbsp;&nbsp;&nbsp;$1.20 - $1.50
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                    href="https://fobwerks.en.alibaba.com/product/1600737261855-906946063/Factory_Price_Car_Air_Filter_For_Toyota_CELICA_Coupe_T18_OEM_17801_74020_Filtro_De_Aire.html?spm=a2700.shop_index.88787.6.4a2769f0LgoO0J"
+                    target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.2">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="https://sc04.alicdn.com/kf/Hd3f6ca63d4ad457c9a0f3b16f57afd3ai/Factory-Price-Car-Air-Filter-For-Toyota.jpg_350x350.jpg">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                          <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:100</span></div>
+                        </div>
+                      </a></div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;">
+                    <!-- 标题 -->
+                    <span class="pcv_valve_title">Factory Price Car Air Filter For Toyota CELICA Coupe (_T18_) OEM 17801-74020 Filtro De Aire</span>
+                  </div>
+                  <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                    src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                    style="display: block;">
+                    <div class="yu_bbdd" style="display: block;">
+                      <!-- 价格 -->
+                      <span>$3.00 - $3.50                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                    href="https://fobwerks.en.alibaba.com/product/1600737426171-906946063/Low_MOQ_Air_Filter_For_Toyota_Filters_Air_OEM_17801_22020.html?spm=a2700.shop_index.88787.8.4a2769f05D0rlc"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.3">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                        src="https://sc04.alicdn.com/kf/H01a59cdc376549bfabaacb320cd60b29g/Low-MOQ-Air-Filter-For-Toyota-Filters.jpg_350x350.jpg">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                          <!-- 起订量 -->
+                          <span  class="min_order">MIN.ORDER:100</span></div>
+                        </div>
+                    </a></div>
+                  </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">Low MOQ Air Filter For Toyota Filters Air OEM 17801-22020</span></div>
+                      <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                      src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                      style="display: block;">
+                    <div class="yu_bbdd" style="display: block">
+                      <!-- 价格 -->
+                      <span >$1.80 - $2.00
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                    href="https://www.alibaba.com/product-detail/Factory-Price-A1668300218-Car-Air-Filters_1600729421898.html?spm=a2700.shop_plser.41413.2.d64a317cwwdHdG"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.4">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                        src="https://sc04.alicdn.com/kf/Hdda1a2149cf8464fa26b763972874ba2x/Factory-Price-A1668300218-Car-Air-Filters-For.jpg_350x350.jpg">
+                      </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                           <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:200</span></div>
+                        </div>
+                    </a></div>
+                  </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  
+                  <!-- 标题 -->
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">Factory Price A1668300218 Car Air Filters For Mercedes Benz Oil Filer</span></div>
+                  <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                    src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                    style="display: block;">
+                    <div class="yu_bbdd" style="display: block;"><span>$1.10 - $1.34
+                    </span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+              <div class="yu_xbb" style="width: 224px;">
+                <div class="yu_xtp" style="width: 224px; height: 224px;">
+                  <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                    href="https://fobwerks.en.alibaba.com/product/1600728150899-906946063/High_Quality_Car_Air_Filter_For_BMW_OEM_13717601868_CA11422.html?spm=a2700.shop_index.88787.9.4a2769f05D0rlc"
+                      target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.5">
+                      <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                          src="https://sc04.alicdn.com/kf/H3e2362b5f746437a896a672bcb224e974/High-Quality-Car-Air-Filter-For-BMW.jpg_350x350.jpgs">
+                        </div>
+                      <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                        <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                           <!-- 起订量 -->
+                          <span class="min_order">MIN.ORDER:100</span></div>
+                      </div>
+                    </a></div>
+                </div>
+                <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                  <!-- 标题 -->
+                  
+                 
+                  <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">High Quality Car Air Filter For BMW OEM 13717601868 CA11422</span></div><div class="yu_dztp" style="display: block; margin-left: 0px;"><img src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png" style="display: block;"><div class="yu_bbdd" style="display: block;"><span>$1.50 - $1.70
+                  </span></div></div></div></div></div></div>
+                  
+                  <!-- 油滤器 -->
+                  <div  id="oil_filter" class="pcv_valve yu_bbxx" style="display: flex;">
+                    <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+                      <div class="yu_xbb" style="width: 224px;">
+                        <div class="yu_xtp" style="width: 224px; height: 224px;">
+                          <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;position: relative;">
+                            <a href="https://www.alibaba.com/product-detail/High-Performance-Oil-Filter-Element-610DA1013010A_1600723661206.html?spm=a2700.shop_plser.41413.3.5a2f6c85qLzQSK" target="_blank" rel="noopener noreferrer">
+                              <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                                  src="https://sc04.alicdn.com/kf/H2fe82f0cf4a94be5a37b067eada1e2ffS/High-Performance-Oil-Filter-Element-610DA1013010A-for.jpg_350x350.jpg"
+                                  data-spm-anchor-id="a2700.shop_index.88787.i3.4abb69f0mJVzyB"></div>
+                              <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;position: absolute;">
+                                <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                                  <!-- 起订量 -->
+                                  <span class="min_order">MIN.ORDER:100</span></div>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                          <!-- 标题 -->
+                          <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">High Performance Oil Filter Element 610DA1013010A for TOYOTA HILUX KUN26 LAND CRUISER</span></div>
+                          <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                              src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                              style="display: block;">
+                            <div class="yu_bbdd" style="display: block; ">
+                              <!-- 价格 -->
+                              <span>$1.60 - $2.00
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+                      <div class="yu_xbb" style="width: 224px;">
+                        <div class="yu_xtp" style="width: 224px; height: 224px;">
+                          <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                              href="https://www.alibaba.com/product-detail/High-Performance-Oil-Filter-2632084300-26320_1600722803599.html?spm=a2700.shop_plser.41413.3.457028df95V3F4"
+                              target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.2">
+                              <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                                  src="https://sc04.alicdn.com/kf/H7d35774fef3a4d6cb32b4dd299f73917z/High-Performance-Oil-Filter-2632084300-26320-84300.jpg_350x350.jpg">
+                              </div>
+                              <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                                <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                                  <!-- 起订量 -->
+                                  <span class="min_order">MIN.ORDER:100</span></div>
+                              </div>
+                            </a></div>
+                        </div>
+                        <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                          <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;">
+                            <!-- 标题 -->
+                            <span class="pcv_valve_title">High Performance Oil Filter 2632084300 26320-84300 for HYUN.D.A.I Trucks</span>
+                          </div>
+                          <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                              src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                              style="display: block;">
+                            <div class="yu_bbdd" style="display: block;">
+                              <!-- 价格 -->
+                              <span>$2.50 - $3.00
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+                      <div class="yu_xbb" style="width: 224px;">
+                        <div class="yu_xtp" style="width: 224px; height: 224px;">
+                          <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                              href="https://fobwerks.en.alibaba.com/product/1600722867380-906705851/High_Performance_Oil_Filter_Element_11427506677_for_BMW_X5_E53_.html?spm=a2700.shop_index.88787.10.4a2769f05D0rlc"
+                              target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.3">
+                              <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                                  src="https://sc04.alicdn.com/kf/He8f9529b2ae14d119caae111e9ffe027V/High-Performance-Oil-Filter-Element-11427506677-for.jpg_350x350.jpg">
+                              </div>
+                              <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                                <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                                  <!-- 起订量 -->
+                                  <span  class="min_order">MIN.ORDER:100</span></div>
+                              </div>
+                            </a></div>
+                        </div>
+                        <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                          <!-- 标题 -->
+                          <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">High Performance Oil Filter Element 11427506677 for BMW X5 (E53)</span></div>
+                          <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                              src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                              style="display: block;">
+                            <div class="yu_bbdd" style="display: block">
+                              <!-- 价格 -->
+                              <span >$1.40 - $1.70
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+                      <div class="yu_xbb" style="width: 224px;">
+                        <div class="yu_xtp" style="width: 224px; height: 224px;">
+                          <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                              href="https://www.alibaba.com/product-detail/high-performance-Oil-Filter-15208-65F00_1600722577072.html?spm=a2700.shop_plser.41413.3.39ed4409dX9eds"
+                              target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.4">
+                              <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                                  src="https://sc04.alicdn.com/kf/H349ac0f41c594ed5a716003ddffbf1c6q/high-performance-Oil-Filter-15208-65F00-For.jpg_350x350.jpg">
+                              </div>
+                              <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                                <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                                   <!-- 起订量 -->
+                                  <span class="min_order">MIN.ORDER:100</span></div>
+                              </div>
+                            </a></div>
+                        </div>
+                        <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                
+                          <!-- 标题 -->
+                          <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">high performance Oil Filter 15208-65F00 For Nissan QASHQAI VERSA I 370 Z Roadster</span></div>
+                          <div class="yu_dztp" style="display: block; margin-left: 0px;"><img
+                              src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png"
+                              style="display: block;">
+                            <div class="yu_bbdd" style="display: block;"><span>$1.50 - $2.00
+                            </span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="yu_bbzt" style="width: 224px; margin-right: 20px;">
+                      <div class="yu_xbb" style="width: 224px;">
+                        <div class="yu_xtp" style="width: 224px; height: 224px;">
+                          <div class="yu_bbtp" style="width: 224px; height: 224px; margin-left: 0px; margin-top: 0px;;position: relative;"><a
+                              href="https://www.alibaba.com/product-detail/Low-MOQ-Oil-Filter-31726-3JX0A_1600532368495.html?spm=a2700.shop_plser.41413.3.2fdb13cdBqrjne"
+                              target="_blank" rel="noopener noreferrer" data-spm-anchor-id="a2700.shop_index.88787.5">
+                              <div class="yu_bbtp_tp" style="width: 224px; height: 224px;"><img
+                                  src="https://sc04.alicdn.com/kf/Heb746e4905d14693ab0f93eb56a57b29n/Low-MOQ-Oil-Filter-31726-3JX0A-Transmission.jpg_350x350.jpg">
+                              </div>
+                              <div class="yu_bbhover red_curtain" style="width: 224px; height: 112px; margin-top: 112px;;position: absolute;">
+                                <div class="yu_bbhoverbbbt" style="display: block; width: 224px; margin-top: 26px;">
+                                   <!-- 起订量 -->
+                                  <span class="min_order">MIN.ORDER:50</span></div>
+                              </div>
+                            </a></div>
+                        </div>
+                        <div class="yu_shadow" style="width: 224px; background: rgb(16, 16, 16);">
+                          <!-- 标题 -->
+                
+                          <div class="yu_bbjg" style="display: block; width: 224px; margin-bottom: 0px;"><span class="pcv_valve_title">Low MOQ Oil Filter 31726-3JX0A Transmission Oil Cooler Filter For Nissan</span></div><div class="yu_dztp" style="display: block; margin-left: 0px;"><img src="https://img.alicdn.com/imgextra/i4/3528491912/TB2kHy9o25TBuNjSspmXXaDRVXa_!!3528491912.png" style="display: block;"><div class="yu_bbdd" style="display: block;"><span>$1.40 - $1.60
+                          </span></div></div></div></div></div></div>
+                   
+         <!-- 三个产品组方块:PCV valves;Air filter;Oil filter:默认红图,点击切换灰图 -->
+         <div style="display: flex; justify-content:space-between;width: 1200px;  ">
+          <!-- PVC阀  -->
+          <div id="pcv_valve_btn" style="position: relative;cursor: pointer;"><img src="/static/img/red_banner.png" alt=""><span style='color: white;font-size: 18px;display: inline-block;z-index:8;position: absolute;margin:auto;top:0;bottom: 0;left: 0;right: 0;text-align: center;line-height: 56px;'>PCV valve</span></div>
+          <!-- 滤清器 -->
+          <div id="air_filter_btn" style="position: relative;cursor: pointer;"><img src="/static/img/red_banner.png" alt=""><span style='color: white;font-size: 18px;display: inline-block;z-index:8;position: absolute;margin:auto;top:0;bottom: 0;left: 0;right: 0;text-align: center;line-height: 56px;'>Air filter</span></div>
+          <!-- 油滤器 -->
+          <div id="oil_filter_btn" style="position: relative;cursor: pointer;"><img src="/static/img/red_banner.png" alt=""><span style='color: white;font-size: 18px;display: inline-block;z-index:8;position: absolute;margin:auto;top:0;bottom: 0;left: 0;right: 0;text-align: center;line-height: 56px;'>Oil filter</span></div>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!-- 红线框 -->
+          <div style="margin-top:20px">
+            <img src="/static/img/blk_banner1.png" alt="">
+          
+            <!-- 主框:工厂照片&about us&营业执照轮播图 -->
+            <div style="background-color: #000;padding: 34px;width:1200px;display: flex;flex-direction: column;border-right: solid 1px red; border-left:solid 1px red">
+            <img src="/static/img/factory.png" alt="">
+            <img src="/static/img/about_us.png" alt="">
+            <!-- 轮播图外框  -->
+            <div style="position: relative;width:1096px;height: 357px;display: flex;">
+              <!-- 执照轮播图:2张,左边左右红箭头可控制 下方小圆点可控制 -->
+              <div id="certificate" style="overflow: hidden;position: relative;width:1096px;height: 357px;display: flex;" >
+                <!-- <img id="certificate_pic0" style="margin-left: -1096;" src="/static/img/certificate2.png" alt=""> -->
+                <!-- 图1 -->
+                <img id="certificate_pic1" src="/static/img/certificate1.png" alt="">
+                <!-- 图2 -->
+                <img id="certificate_pic2" src="/static/img/certificate2.png" alt="">
+                <!-- 图3:假图实际图1 -->
+                <img id="certificate_pic3" src="/static/img/certificate1.png" alt="">
+                <!-- 小圆点*2:选中时为红色;否则半透明白色 -->
+                <button class="spot" style="border:none;left: 48%;width: 20px;height: 20px;position: absolute;bottom:20px;z-index: 8;border-radius:50%;background-color:#ffffff;opacity:0.5;cursor: pointer;"></button>
+                <button class="spot" style="border:none;left: 52%;width: 20px;height: 20px;position: absolute;bottom:20px;z-index: 8;border-radius:50%;background-color:#ffffff;opacity:0.5;cursor: pointer;"></button>
+              </div>
+              <!-- 左右箭头按钮 25px-->
+              <span class="red_arrow glyphicon glyphicon-chevron-left" style="cursor: pointer;text-align: center;line-height: 25px;display: inline-block;width: 25px;height: 25px;font-size: 20px;z-index: 8;position: absolute;left:-26px;top:295px;background-color: red;color: white;"  class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="red_arrow glyphicon glyphicon-chevron-right" style="cursor: pointer;text-align: center;line-height: 25px;display: inline-block;width: 25px;height: 25px;font-size: 20px;z-index: 8;position: absolute;left:-26px;top:325px;background-color: red;color: white;"  class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </div>
+              
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <!-- 红线框 -->
+        <td>
+          <img src="/static/img/blk_banner2.png" alt="">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!-- contact us图片 -->
+          <img src="/static/img/contact_us.png" alt="">
+       
+        </td>
+      </tr>
+    </table>
+  </div><!-- 黑色背景图盒子end -->
+  <!-- 彩色背景盒子 -->
+  <div class="container" style=" padding: 100px;;width: 1900px;height: 300px;background-size: 1900px;background-image: url('/static/img/colorfull_background.png);">
+    
+   <div class="container" style="width: 1200px;">
+    <table>
+      <tr>
+        <style>
+          .people{
+            display: inline-block;
+          
+          }
+          .ppl{
+            cursor: pointer;
+          }
+          .ppl span{
+            left:15px
+          }
+        </style>
+        <td style="display:flex;justify-content: space-around;">
+          
+          
+            <div class="ppl">
+              <!-- 头像1 -->
+              <a href="https://fobwerks.en.alibaba.com">
+                <img src="/static/img/people1.png" alt="" class="people">
+                <br>
+
+                <!-- 旺旺 -->
+                <img src="/static/img/wangwang.png" style="height: 20px;display: inline-block;" alt="" class="">
+                <!-- 销售员名字 -->
+                <span style="display:inline-block;color: white;position: relative;top: 5px;">Gu Shawn</span>
+              </a>
+            </div>
+            <div class="ppl">
+              <a href="https://fobwerks.en.alibaba.com">
+
+                <!-- 头像2 -->
+                 <img src="/static/img/people2.png" alt="" class="people">
+                 <br>
+                 <!-- 旺旺 -->
+                 <img src="/static/img/wangwang.png" style="height: 20px;display: inline-block;" alt="" class="">
+                 <!-- 销售员名字 -->
+                 <span style="display:inline-block;color: white;position: relative;top: 5px;">Colson</span>
+              </a>
+            </div>
+            <div class="ppl">
+              <a href="https://fobwerks.en.alibaba.com">
+
+                <img src="/static/img/people3.png" alt="" class="people">
+                <br>
+                <!-- 旺旺 -->
+                <img src="/static/img/wangwang.png" style="height: 20px;display: inline-block;" alt="" class="">
+                <!-- 销售员名字 -->
+                <span style="display:inline-block;color: white;position: relative;top: 5px;">shanon Zhou</span>
+              </a>
+            </div>
+            <div class="ppl">
+              <a href="https://fobwerks.en.alibaba.com">
+
+                <img src="/static/img/people4.png" alt="" class="people">
+                <br>
+                <!-- 旺旺 -->
+                <img src="/static/img/wangwang.png" style="height: 20px;display: inline-block;" alt="" class="">
+                <!-- 销售员名字 -->
+                <span style="display:inline-block;color: white;position: relative;top: 5px;">Kyra Liu</span>
+              </a>
+            </div>
+            <div class="ppl">
+              <a href="https://fobwerks.en.alibaba.com">
+
+                <img src="/static/img/people5.png" alt="" class="people">
+                <br>
+                <!-- 旺旺 -->
+                <img src="/static/img/wangwang.png" style="height: 20px;display: inline-block;" alt="" class="">
+                <!-- 销售员名字 -->
+                <span style="display:inline-block;color: white;position: relative;top: 5px;">Jared</span>
+              </a>
+            </div>
+            <div class="ppl">
+              <a href="https://fobwerks.en.alibaba.com">
+
+                <img src="/static/img/people6.png" alt="" class="people">
+                <br>
+                <!-- 旺旺 -->
+                <img src="/static/img/wangwang.png" style="height: 20px;display: inline-block;" alt="" class="">
+                <!-- 销售员名字 -->
+                <span style="display:inline-block;color: white;position: relative;top: 5px;">Linn Lin</span>
+              </a>
+            </div>
+       
+        </td>
+      </tr>
+   
+    </table>
+    
+  </div>
+  </div><!-- 彩色背景盒子end -->
+    <!-- 黑色背景盒子 -->
+    <div class="container" style=" padding: 100px;;width: 1900px;background-size: 1900px;background-color: black;">
+    
+      <div class="container" style="width: 1200px;">
+        <table>   <tr><td>  <div>
+          <!-- 照片墙 0514 -->
+          <img src="/static/img/photo_wall.png" alt="">
+         </div></td></tr>
+        <tr>
+          <td>
+            <style>
+              .photo_wall{border:rgb(52,52,52) solid 10px;background-color: #ffffff; }
+              .photo_wall img{margin: 10px; }
+              /* 动画 移入 右边和下边变白0-99%,变大 */
+              @keyframes white_border{
+                0%{
+                  border-right: #ffffff 1px solid;
+                  border-bottom: #ffffff 1px solid;
+                }
+                99%{
+                  border-right: #ffffff 1px solid;
+                  border-bottom: #ffffff 1px solid;
+                  
+                }
+              }
+              
+            </style>
+            <!-- 照片墙6张 -->
+            <div style="display: flex;flex-wrap:wrap;width: 1200px;height: 728px; position: relative;">
+              <!-- 照片盒子 -->
+              <div class="photo_wall" style="position: absolute;left: 30px;top:50px;height: 394;">
+
+                <img src="/static/img/team.png" style="width: 280;height: 354;margin: 10px;" alt="">
+              </div>
+              <div class="photo_wall" style="height: 304px;position: absolute;left: 365px">
+                <img src="/static/img/team2.png"  alt="">
+
+              </div>
+              <div class="photo_wall" style="height: 248px;;position: absolute;left: 656;top:50"">
+
+                <img src="/static/img/team3.png"  alt="">
+              </div>
+              <div class="photo_wall" style="height: 216px;position: absolute;left: 30;top:470">
+                <img src="/static/img/team4.png"  alt="">
+
+              </div>
+              <div class="photo_wall" style="height: 320px;position: absolute;left: 365;top:330">
+
+                <img src="/static/img/team5.png"  alt="">
+              </div>
+              <div class="photo_wall"  style="height: 216px;;position: absolute;left: 860;top:330">
+                <img src="/static/img/team6.png" alt="">
+
+              </div>
+              <!-- 照片墙移入白边&变大JS  -->
+              <script>
+                $('.photo_wall').hover(function(){
+                  // 照片盒子移入变大2%,白边到99%
+                  $(this).css('transform','scale(1.02)')
+                  $(this).css('transition','transform 0.5s linear')
+                  $(this).css('animation','white_border')
+                  
+                  // // 照片变大2%
+                  // $(this).children().css('transform','scale(1.02)')
+                  // $(this).children().css('transition','transform 1s linear')
+                },function(){
+                  // 移出还原大小
+                  // 盒子还原
+                  $(this).css('transform','scale(1)')
+                  $(this).css('transition','transform 0.5s linear')
+                  //   // 照片还原
+                  //   $(this).children().css('transform','scale(1)')
+                  // $(this).children().css('transition','transform 1s linear')
+
+                })
+              </script>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <!-- 类目框 -->
+            <!-- 红线框 -->
+            <img src="/static/img/blk_banner1.png" alt="">
+            <div style="border-right:red 1px solid ;border-left:red 1px solid">
+             <!-- 分类 -->
+             <img src="/static/img/classification.png" alt="">
+             <!-- 9个类目 -->
+             <!-- 9个类目CSS -->
+             <style>
+              /*文字定位&颜色  */
+              .classification span{
+                z-index: 8;position: absolute;display: inline-block; left:25%;line-height: 56px;color:white;font-size: 20px;
+                text-align: center;
+              }
+              /* 定位 */
+              .classification div{position: relative;margin-top: 20px;cursor: pointer;}
+              .long_classification span{left:15%;}
+             </style>
+             <div class="classification" style="display:flex;justify-content:space-around;flex-wrap: wrap;">
+              <!-- 9个类目:红方块和文字 -->
+              <div style="display: inline-block;position: relative; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-928906375/Universal_Parts.html?spm=a2700.shop_pl.88.16">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span style="">Universal Parts</span></div>
+                </a>
+              <div style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-928858178/Cooling_System.html?spm=a2700.shop_plgr.88.18">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Cooling System</span></div>
+                </a>
+              <div style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-928579326/Engine_Mounts.html?spm=a2700.shop_plgr.88.20.79966b0egRgDeY">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Engine Mounts</span></div>
+                </a>
+              <div class="long_classification" style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-928603687/Auto_Suspension_Systems.html">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Auto Suspension Systems</span></div>
+                </a>
+              <div class="long_classification"  style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-927192175/Engine_overhaul_package.html?spm=a2700.shop_plgr.88.23">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Engine overhaul package</span></div>
+                </a>
+              <div class="long_classification"  style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-924254902/Fuel_Line_Quick_Connector.html?spm=a2700.shop_plgr.88.24.45db6b0eJ16Oed">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Fuel Line Quick Connector</span></div>
+                </a>
+              <div style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-924283865/VVT_Valve.html?spm=a2700.shop_plgr.88.25.45db6b0eJ16Oed">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>VVT Valve</span></div>
+                </a>
+              <div style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-923803445/Clutch_Slave_Cylinder.html?spm=a2700.shop_plgr.88.26.45db6b0eJ16Oed">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Clutch Slave Cylinder</span></div>
+                </a>
+              <div style="display: inline-block; " >
+                <a href="https://fobwerks.en.alibaba.com/productgrouplist-924691587/Gasket.html?spm=a2700.shop_plgr.88.27.45db6b0eJ16Oed
+                Gasket">
+
+                  <img src="/static/img/red_arrow_block.png" alt=""><span>Gasket</span></div>
+                </a>
+              
+              
+             </div>
+            </div>
+
+            <!-- 红线下框 -->
+            <img src="/static/img/blk_banner2.png" alt="">
+           
+          </td>
+        </tr>
+        <tr>
+          <style>
+           .four_goods_img{
+            height: 288px;
+            width: 288px;
+            cursor: pointer;
+          }
+          .red_block_chart{
+             height: 36px;
+             width: 288px
+
+           }
+           .four_goods span{
+            color: #ffffff;position:absolute;bottom: 7px;left:40px;z-index: 8;
+           }
+           .four_goods div{
+            position: relative; 
+          }
+          
+          </style>
+          <td style="margin-top:20px;display:flex;justify-content:space-between" class="four_goods">
+             <!-- 四产品 -->
+             <div>
+                <a href="https://www.alibaba.com/product-detail/Fuel-Injector-Repair-Kit-Rubber-O_1600849683114.html?spm=a2700.shop_plser.41413.8.5c022d67Sooe64">
+
+                    <img class="four_goods_img"  src="/static/img/四产品1.png" alt="">
+                </a>
+              <img class="red_block_chart" src="/static/img/red_block_chart.png" alt=""><span>$0.03-$0.04&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN ORDER:1000</span></div>
+             <div>
+              <a href="https://www.alibaba.com/product-detail/Fuel-injector-Micro-Filter-11032-De_1600849545675.html?spm=a2700.shop_plser.41413.3.48a92d66uWUI1M">
+
+                <img class="four_goods_img" src="/static/img/四产品2.png" alt=""> 
+              </a>
+              
+              <img src="/static/img/red_block_chart.png" class="red_block_chart" alt=""><span>$0.06 - $0.07&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN ORDER:1000</span></div>
+             <div>
+              <a href="https://www.alibaba.com/product-detail/11024-FUEL-INJECTOR-REPAIR-KITS-Micro_1600460877123.html?spm=a2700.shop_plser.41413.4.1a522cd6nsDS2I">
+                <img class="four_goods_img" src="/static/img/四产品3.png" alt=""> <img src="/static/img/red_block_chart.png" class="red_block_chart" alt=""><span>$0.06 - $0.07&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN ORDER:1000</span></div>
+
+              </a>
+             <div>
+               <a href="https://fobwerks.en.alibaba.com/product/1600920030345-906936474/0280160587_Fuel_Pressure_Regulator_For_Mercedes_Benz_SL600.html?spm=a2700.shop_index.88793.4.4b0e2cd6YjHiu1">
+                <img class="four_goods_img" src="https://sc04.alicdn.com/kf/Ha42b77ae41fe4857a3a38a87fd43317bi/0280160587-Fuel-Pressure-Regulator-For-Mercedes-Benz.jpg_350x350.jpg" alt=""> 
+
+              </a>
+              <img src="/static/img/red_block_chart.png" class="red_block_chart" alt=""><span>$9.25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:50            </span></div>
+          </td>
+        </tr>
+        <tr>
+          
+          <!-- 轮播图(底部)  -->
+          <!-- #TODO 底部汽车轮播图 -->
+          <td>
+                  <!-- 轮播图外框  -->
+                  <div style="margin-top:20px;position: relative;width:1200px;height: 500;display: flex;">
+                    <!-- 执照轮播图:2张,左边左右红箭头可控制 下方小圆点可控制 -->
+                    <div id="lunboPhoto" style="overflow: hidden;position: relative;width:1200px;height: 500px;display: flex;" >
+                      <!-- <img id="certificate_pic0" style="margin-left: -1096;" src="/static/img/certificate2.png" alt=""> -->
+                      <!-- 图1 -->
+                      <img id="lunboPhoto_pic1" src="/static/img/轮播图二图1.png" alt="">
+                      <!-- 图2 -->
+                      <img id="lunboPhoto_pic2" src="/static/img/轮播图二图2.png" alt="">
+                      <!-- 图3:假图实际图1 -->
+                      <img id="lunboPhoto_pic3" src="/static/img/轮播图二图1.png" alt="">
+                      <!-- 小圆点*2:选中时为红色;否则半透明白色 -->
+                      <button class="lunboSpot" style="border:none;left: 48%;width: 20px;height: 20px;position: absolute;bottom:20px;z-index: 8;border-radius:50%;background-color:#ffffff;opacity:0.5;cursor: pointer;"></button>
+                      <button class="lunboSpot" style="border:none;left: 52%;width: 20px;height: 20px;position: absolute;bottom:20px;z-index: 8;border-radius:50%;background-color:#ffffff;opacity:0.5;cursor: pointer;"></button>
+                    </div>
+                    <!-- 左右箭头按钮 25px-->
+                    <span class="lunboArrow leftLunboArrow glyphicon glyphicon-chevron-left" style="top:45%;width: 30;height:80;display:inline-block;z-index:8;position:absolute;left:0;background-color: gray;opacity: 0.2;line-height:80px ;text-align: center;color:white;" ></span>
+                    <span class="lunboArrow rightLunboArrow glyphicon glyphicon-chevron-right" style="top:45%;width: 30;height:80;display:inline-block;z-index:8;position:absolute;right:0;background-color: gray;opacity: 0.2;line-height:80px ;text-align: center;color:white;"></span>
+                  </div>
+                   <!-- 左右箭头拉动图片轮播图JS:通过首图左边距动画+最后一张假图+极限值直接设定边距 -->
+                   <!-- #TODO 底部汽车轮播图JS待修改 -->
+              <script>
+                // 激活小圆点样式函数:输入下标
+                function activateLunboSpot(i){
+                  $('.lunboSpot').eq(i).css('backgroundColor','red')
+                  $('.lunboSpot').eq(i).css('opacity','1')
+                  if(i==0){
+                    //激活小园点1 失活小圆点2 
+                    $('.lunboSpot').eq(1).css('backgroundColor','white')
+                   $('.lunboSpot').eq(1).css('opacity','0.5')
+                  }
+                  else if(i==1){
+                    //激活小园点2 失活小圆点1
+                    $('.lunboSpot').eq(0).css('backgroundColor','white')
+                   $('.lunboSpot').eq(0).css('opacity','0.5')
+                  }
+                }
+                //0.入口函数:设圆点1为红色并且非透明
+                $(function(){
+                  $('.lunboSpot:eq(0)').css('backgroundColor','red')
+                  $('.lunboSpot:eq(0)').css('opacity','1')
+                })
+
+                // 一.左箭头点击事件0503:ok
+                $('.lunboArrow:eq(0)').click(function(){
+                  // 获取左箭头
+                  var leftRedArrow= $('.lunboArrow:eq(0)')
+                  // 获取图片1
+                  var certificate1=$('#lunboPhoto>img:eq(0)')
+                  var marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')-1200+'px'
+                  console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2400,-1200,0)
+                  // 当边距为0:0到-1200 
+                  if(marginLeft==0){
+                    console.log('左边距0')
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1200 1s forwards')
+                    // 激活对应小圆点:2
+                    activateLunboSpot(1)
+                  }
+                  // 当边距为-1200:-1200到-2400 
+                 else if(marginLeft==-1200){
+                    console.log('左边距-1200')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-1200to-2400 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activateLunboSpot(0)
+                  }
+                  //当边距为-2400:2400并回到0,并拉动0到-1200 
+                  else if(marginLeft==-2400){
+                    console.log('左边距-2400')
+                    certificate1.css('marginLeft','0')//回到0
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1200 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:2
+                    activateLunboSpot(1)
+                    
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    console.log('左边距不是0,-1200,-2400无动作')
+                  }
+                })
+                // 二.右箭头点击事件
+                $('.lunboArrow:eq(1)').click(function(){
+                  // 获取右箭头
+                  var rightRedArrow= $('.lunboArrow:eq(1)')
+                  // 获取图片1
+                  var certificate1=$('#lunboPhoto>img:eq(0)')
+                  var marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')+1200+'px'
+                  console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2400,-1200,0)
+                  // 当边距为0:切换到-2400 ,从-2400到-1200
+                  if(marginLeft==0){
+                    console.log('边距为0:切换到-2400 ,从-2400到-1200')
+                    certificate1.css('marginLeft','-2400')//切换到-2400
+                    // 用动画:从-2400到-1200
+                    certificate1.css('animation','scrollPic-2400to-1200 1s forwards')
+                    // 激活对应小圆点:2
+                    activateLunboSpot(1)
+                  }
+                  // 当边距为-1200:-1200到0   
+                  else if(marginLeft==-1200){
+                    console.log('左边距-1200')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-1200to0 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activateLunboSpot(0)
+                    
+                  }
+                  //当边距为-2400:2400并回到0,并拉动0到-1200 
+                  else if(marginLeft==-2400){
+                    console.log('左边距-2400')
+                    // 用动画:从-2400到-1200
+                    certificate1.css('animation','scrollPic-2400to-1200 1s forwards')                    
+                    // 激活对应小圆点:2
+                    activateLunboSpot(1)
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    console.log('左边距不是0,-1200,-2400无动作')
+                  }
+                })
+                // 三.左右小圆点拉动图片JS
+                  // 1.圆点1点击事件:变成红色,显示图1或者图3时无动作,图2时拉动图1左边距-1200到0,把圆点2变成白色半透明
+                  var spot1=$('.lunboSpot:eq(0)')//获取元素圆点1
+                  var spot2=$('.lunboSpot:eq(1)')//获取元素圆点2
+                  $('.lunboSpot:eq(0)').click(function(){
+                       
+                        // 把圆点1变成红色不透明
+                        // 把圆点2变成白色半透明
+                        
+                        // 判断边距
+                        // 获取图片1
+                        var certificate1=$('#lunboPhoto>img:eq(0)')
+                        //获取左边距
+                        var marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                        var newMarginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')-1200+'px'
+                         //当为三大边距时激活圆点1
+                         if(marginLeft==0||marginLeft==-1200||marginLeft==-2400){
+                            activateLunboSpot(0)
+                         } 
+                         console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                         // 当边距为-1200:-1200到-2400 ;其他情况下无动作
+                         if(marginLeft==-1200){
+                          console.log('圆点1:左边距-1200')
+                          console.log('左边距-1200')
+                          // 用动画
+                          certificate1.css('animation','scrollPic-1200to0 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                        }
+                          //当边距为-2400:2400并回到0,并拉动0到-1200 
+                        else if(marginLeft==-2400){
+                          var certificate1=$('#lunboPhoto>img:eq(0)')
+                          console.log('左边距-2400回到0')
+                          certificate1.css('marginLeft','0px')//回到0
+
+                          
+                        }
+                       }
+                      
+                       )
+                       // 2.圆点2点击事件
+                      $('.lunboSpot:eq(1)').click(function(){
+                        
+                        // // 把圆点2变成红色不透明
+                        // spot2.css('backgroundColor','red');
+                        // spot2.css('opacity','1')
+                        // // 把圆点1变成白色半透明
+                        // spot1.css('backgroundColor','white');
+                        // spot1.css('opacity','0.5')
+                        // 获取图片1
+                        var certificate1=$('#lunboPhoto>img:eq(0)')
+                        //获取左边距
+                        var marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                        var newMarginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')-1200+'px'
+                        console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                        //当为三大边距时激活圆点2
+                        if(marginLeft==0||marginLeft==-1200||marginLeft==-2400){
+                           activateLunboSpot(1)
+                        } 
+                        // 当边距为-1200:-1200到-2400;其他情况无动作
+                        if(marginLeft==-1200||marginLeft==0){
+                            console.log('圆点2:左边距-1200或者0:设边距为0')
+                            certificate1.css('marginLeft','0px')//设为0
+                            // 用动画
+                            certificate1.css('animation','scrollPic0to-1200 1s forwards')
+                    
+                        }
+                  })
+                // 轮播图自动运行
+                function scrollLunboPhoto(){
+                   // 获取左箭头
+                   var leftRedArrow= $('.lunboArrow:eq(0)')
+                  // 获取图片1
+                  var certificate1=$('#lunboPhoto>img:eq(0)')
+                  var marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')-1200+'px'
+                  // console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2400,-1200,0)
+                  // 当边距为0:0到-1200 
+                  if(marginLeft==0){
+                    console.log('左边距0')
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1200 1s forwards')
+                    // 激活对应小圆点:2
+                    activateLunboSpot(1)
+                  }
+                  // 当边距为-1200:-1200到-2400 
+                 else if(marginLeft==-1200){
+                    // console.log('左边距-1200')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-1200to-2400 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activateLunboSpot(0)
+                  }
+                  //当边距为-2400:2400并回到0,并拉动0到-1200 
+                  else if(marginLeft==-2400){
+                    // console.log('左边距-2400')
+                    certificate1.css('marginLeft','0')//回到0
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1200 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#lunboPhoto img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:2
+                    activateLunboSpot(1)
+                    
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    // console.log('左边距不是0,-1200,-2400无动作')
+                  }
+                }
+                // 间隔2s播放轮播图
+                setInterval(function(){scrollLunboPhoto()},2000)
+
+              </script>
+               <!-- #TODO 底部汽车轮播图end -->
+          </td>
+        </tr>
+        <!-- HOT RECOMMEND推荐商品 -->
+        <tr>
+          <td ><img style="margin-top: 50px;" src="/static/img/hot_recommend.png" alt=""></td>
+        </tr>
+          <!-- #todo 推荐15产品 -->
+          
+          <tr>
+            <!-- 推荐15产品CSS -->
+            <style>
+             .fifteen_goods_img{
+              height: 230;
+              width: 230;
+              cursor: pointer;
+            }
+            .red_block_cart{
+               height: 36px;
+               width: 230
+  
+             }
+             .fifteen_goods span{
+              color: #ffffff;position:absolute;bottom: 10px;left:30px;z-index: 8;font-size: 2px;display: inline-block;
+             }
+             .fifteen_goods div{
+              position: relative;
+              display: flex;
+              flex-direction: column; 
+              background-color: rgb(41,41,41);
+              color:white;
+              font-size: 19px;
+              text-align:center;
+              overflow: hidden;
+            }
+            .goods_title{
+              display: inline-block;
+              height: 90    ;
+              width: 230
+            }
+            </style>
+            <div id="root"> <!-- vue root -->
+            <!-- 第一行产品:用vue绑定图片源 -->
+            <td id="fifteen_goods_line1" style="flex-direction: row; margin-top:20px;display:flex;justify-content:space-between" class="fifteen_goods">
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/product/1600470934063-916804929/Fuel_Pump_Module_Assembly_Fuel_Pump_Assy_For_Mercedes_Benz_Mitsubishi_Toyota_Lexus_Hyundai_Jeep_BMW_Audi_Chevrolet_Volvo_Ford_VW.html?spm=a2700.shop_index.88793.1.4b0e3599t8mTgm">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[0]" alt="">
+                </a>
+                <div class="goods_title">Fuel Pump Module Assembly Fuel Pump Assy For Mercedes Benz Mitsubishi Toyota Lexus Hyundai Jeep BMW Audi Chevrolet Volvo Ford VW</div><img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$0.03-$0.04&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN ORDER:1000</span></div>
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/product/1600296387859-907281986/Fuel_Injector_Repair_Kits_O_Ring_Seals_Plastic_Parts.html?spm=a2700.shop_index.88793.2.4b0e3599t8mTgm">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[1]"alt="">
+                </a>
+                 <div class="goods_title">Fuel Injector Repair Kits O Ring Seals Plastic Parts</div>
+                 <a href="https://www.alibaba.com/product-detail/11001-Auto-Car-Petrol-Fuel-Injector_62340878934.html?spm=a2700.shop_plser.41413.3.3dce14357GVVSc">
+
+                   <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$0.06 - $0.11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN ORDER:1000</span></div>
+                </a>
+               <div>
+                <a href="https://www.alibaba.com/product-detail/11001-Auto-Car-Petrol-Fuel-Injector_62340878934.html?spm=a2700.shop_plser.41413.3.3dce14357GVVSc">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[2]" alt="">
+                </a>
+                <div class="goods_title">11001 Auto Car Petrol Fuel Injector Micro Basket Filters Bulk Basket Nylon 6*3 *12MM</div> <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$0.03 - $0.04&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN ORDER:1000</span></div>
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/productlist.html">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[3]" alt="">
+                </a>
+                
+                <div class="goods_title">11001 Fuel Injector Micro Filter Repair Kits Microfiltros Para De Inyectores For Bosch Mazda Ford Bmw</div><img class="red_block_cart" src="/static/img/red_block_chart.png"> <span>$0.03 - $0.04&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:50 </span></div>
+               <div>
+                <a href="https://www.alibaba.com/product-detail/fuel-pump-connector-fuel-pump-e2068_1600120904878.html?spm=a2700.shop_plser.41413.7.3e972db12Cs20U">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[4]" alt="">
+                </a>
+                <div class="goods_title">fuel pump connector fuel pump e2068 bomba de combustible universal</div> <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$3.40 - $4.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:50</span></div>
+            </td>
+          </tr>
+          <!-- 第二行产品 -->
+          <tr>
+            <td id="fifteen_goods_line2" style="flex-direction: row; margin-top:20px;display:flex;justify-content:space-between" class="fifteen_goods">
+               <!-- 第一行产品 -->
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/product/1600340824998-916804929/All_Type_Automotive_Motorcycle_Universal_Fuel_Pump_Filter_Strainer_For_Toyota_BWM_Mazda_LEXUS_HYUNDAI_KIA_Honda_Nissan_Suzuki_VW.html?spm=a2700.shop_index.88793.3.4b0e69f0zrx9oO">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[0]" alt="">
+                </a>
+                <div class="goods_title">All Type Automotive Motorcycle Universal Fuel Pump Filter Strainer For Toyota BWM Mazda LEXUS HYUNDAI KIA Honda Nissan Suzuki VW</div><img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$0.20 - $0.24&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:100              </span></div>
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/product/1600304832711-916804929/Car_Bobina_de_encendido_Ignition_Coil_For_Nissan_Suzuki_Msd_Toyota_Hyundai_Bmw_Delphi_Denso_Ngk_Peugeot_Chevrolet_Honda.html?spm=a2700.shop_index.88793.5.4b0e69f0zrx9oO">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[1]" alt="">
+                </a>
+                 <div class="goods_title">Car Bobina de encendido Ignition Coil For Nissan Suzuki Msd Toyota Hyundai Bmw Delphi Denso Ngk Peugeot Chevrolet Honda</div><img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$5.00 - $6.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:20              </span></div>
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/product/62019538044-916804929/Car_Electric_Bomba_De_Combustible_Fuel_Pump_For_Toyota_Nissan_Yamaha_Hyundai_Chevrolet_Denso_Delphi_Suzuki_Isuzu_Bmw_VW.html?spm=a2700.shop_index.88793.6.4b0e69f0zrx9oO">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[2]" alt="">
+                </a>
+                <div class="goods_title">Car Electric Bomba De Combustible Fuel Pump For Toyota Nissan Yamaha Hyundai Chevrolet Denso Delphi Suzuki Isuzu Bmw VW</div> <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$3.00 - $4.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:20              </span></div>
+               <div>
+                <a href="https://fobwerks.en.alibaba.com/product/1600246907507-916804929/Auto_Cars_Motorcycle_Bujia_Spark_Plug_For_Nissan_Ngk_Denso_Honda_Toyota_Hyundai_Mazda_Bmw_Peugeot.html?spm=a2700.shop_index.88793.7.4b0e69f0zrx9oO">
+
+                  <img class="fifteen_goods_img" v-bind:src="url[3]" alt="">
+                </a>
+                <div class="goods_title">Auto Cars Motorcycle Bujia Spark Plug For Nissan Ngk Denso Honda Toyota Hyundai Mazda Bmw Peugeot</div><img class="red_block_cart" src="/static/img/red_block_chart.png"> <span>$0.77 - $1.29&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:100              </span></div>
+               <div>
+                 <a href="https://fobwerks.en.alibaba.com/product/10000006137740-916804929/Car_Assembly_Nozzle_inyector_De_combustible_Fuel_Injector_For_Toyota_Ford_Mazda_Denso_Honda_Bmw_Nissan_Suzuki_Hyundai_Kia.html?spm=a2700.shop_index.88793.8.4b0e69f0zrx9oO">
+                  <img class="fifteen_goods_img" v-bind:src="url[4]" alt="">
+
+                </a>
+                <div class="goods_title">Car Assembly Nozzle inyector De combustible Fuel Injector For Toyota Ford Mazda Denso Honda Bmw Nissan Suzuki Hyundai Kia</div> <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$4.00 - $5.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:20              </span></div>
+            </td>
+          </tr>
+             <!-- 第三行产品 -->
+             <tr>
+              <td id="fifteen_goods_line3" style="flex-direction: row; margin-top:20px;display:flex;justify-content:space-between" class="fifteen_goods">
+                 <!-- 第一行产品 -->
+                 <div>
+                  <a href="https://www.alibaba.com/product-detail/Fuel-Injector-Repair-Kit-Micro-Filter_62352422497.html?spm=a2700.shop_plser.41413.2.24cf6ac3uFh7Z2">
+
+                    <img class="fifteen_goods_img" v-bind:src="url[0]" alt="">
+                  </a>
+                  <div class="goods_title">Fuel Injector Repair Kit Micro Filter 11002 For Toyota Yaris 1.5L Corolla Auris Yamaha YZF-R6 6*3*10.7mm</div><img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$0.08 - $0.10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:1000                </span></div>
+                 <div>
+                   <a href="https://fobwerks.en.alibaba.com/product/1600514201000-916804929/Wheel_Speed_ABS_Sensor_For_Toyota_Ford_Isuzu_Kia_Bmw_Vw_Mazda_Honda_Hyundai_Peugeot.html?spm=a2700.shop_index.88793.9.4b0e69f0zrx9oO">
+                    <img class="fifteen_goods_img" v-bind:src="url[1]" alt=""> 
+
+                  </a>
+                  <div class="goods_title">Wheel Speed ABS Sensor For Toyota Ford Isuzu Kia Bmw Vw Mazda Honda Hyundai Peugeot</div><img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$4.50 - $5.50&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:20                </span></div>
+                 <div>
+                  <a href="https://fobwerks.en.alibaba.com/product/10000001206930-916804929/Car_Engine_Fuel_Pressure_Regulator_For_Nissan_Toyota_Chevrolet_Hyundai_Ford_Kia_Denso.html?spm=a2700.shop_index.88793.4.4b0e69f0zrx9oO">
+
+                    <img class="fifteen_goods_img" v-bind:src="url[2]" alt=""><div class="goods_title">Car Engine Fuel Pressure Regulator For Nissan Toyota Chevrolet Hyundai Ford Kia Denso</div> <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$8.30 - $10.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:50                </span></div>
+                  </a>
+                 <div>
+                  <a href="https://fobwerks.en.alibaba.com/product/1600719201786-924254902/All_Size_Fuel_Line_Quick_Connector_Disconnect_Release_Hose_Pipe_Fitting_Petrol.html?spm=a2700.shop_index.88793.11.4b0e69f0zrx9oO">
+
+                    <img class="fifteen_goods_img" v-bind:src="url[3]" alt=""><div class="goods_title">All Size Fuel Line Quick Connector Disconnect Release Hose Pipe Fitting Petrol</div><img class="red_block_cart" src="/static/img/red_block_chart.png"> <span>$7.60 - $8.70&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:30                </span></div>
+                  </a>
+                 <div>
+                  <a href="https://fobwerks.en.alibaba.com/product/1600717679708-924283865/VVT_Valve_For_Kia_Toyota_RAV_4_II_ECHO_Saloon_SOUL_RIO_II_Saloon_Yaris_Echo_Prius_Scion_1_5L.html?spm=a2700.shop_index.88793.12.4b0e69f0zrx9oO">
+
+                    <img class="fifteen_goods_img" v-bind:src="url[4]" alt="">
+                  </a>
+                  
+                  <div class="goods_title">VVT Valve For Kia Toyota RAV 4 II ECHO Saloon SOUL RIO II Saloon Yaris Echo Prius Scion 1.5L</div> <img class="red_block_cart" src="/static/img/red_block_chart.png"><span>$2.50 - $7.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIN.ORDER:50.0                </span></div>
+                </td>
+            </tr>
+            <!-- vue #root end-->
+          </div>
+           <!-- vue代码:十五图片url  -->
+            <script>
+              // Vue.config.productionTip = false;无效需要改源码
+            var vm= new Vue({
+                el:"#fifteen_goods_line1",
+                // 分隔符改为[[]]双中括号
+                delimeters:['[[',']]'],
+                data:{
+                  // 图片网站
+                  url:['https://sc04.alicdn.com/kf/H270d409b5abc489fba5a6a63940b6e37e/Fuel-Pump-Module-Assembly-Fuel-Pump-Assy.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Hda82660b4b4d4d5e9bcec549eea763b5p/Fuel-Injector-Repair-Kits-O-Ring-Seals.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Had184a2438814c668012cfbfd7c256f4a/11001-Auto-Car-Petrol-Fuel-Injector-Micro.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/H1278be40f06f46ed99beec32eec49866J/11001-Fuel-Injector-Micro-Filter-Repair-Kits.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Hc9dda9230f8c4b12a79d52c97f939fb6I/fuel-pump-connector-fuel-pump-e2068-bomba.jpg_350x350.jpg',
+                  ]
+                  
+                }
+              })
+               new Vue({
+                el:"#fifteen_goods_line2",
+                // 分隔符改为[[]]双中括号
+                delimeters:['[[',']]'],
+                data:{
+                   // 图片网站
+                  url:['https://sc04.alicdn.com/kf/Hbe37f9d3255b498f89cea9f7d93ad168A/All-Type-Automotive-Motorcycle-Universal-Fuel-Pump.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/H6b2e6cd3beb045bca58391450707973fa/Car-Bobina-de-encendido-Ignition-Coil-For.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Ha1b43996ac2c40979d5f9b3bb1031ea7E/Car-Electric-Bomba-De-Combustible-Fuel-Pump.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Af9e7dffd770f4d43b4f9e12c22ff2fc18/Auto-Cars-Motorcycle-Bujia-Spark-Plug-For.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Hb5deda8deaf14a55a6dc6e4c19fd9d341/Car-Assembly-Nozzle-inyector-De-combustible-Fuel.jpg_350x350.jpg',
+                  ]
+                }
+              })
+               new Vue({
+                el:"#fifteen_goods_line3",
+                // 分隔符改为[[]]双中括号
+                delimeters:['[[',']]'],
+                data:{
+                      // 图片网站
+                      url:['https://sc04.alicdn.com/kf/H2091803eb02247df9dcc65bee5c1d8d6P/Fuel-Injector-Repair-Kit-Micro-Filter-11002.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/H4f9d70723401485cb0b5fb6c2757d4cda/Wheel-Speed-ABS-Sensor-For-Toyota-Ford.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/Ha0631d4f104749abba7ba74870e04da62/Car-Engine-Fuel-Pressure-Regulator-For-Nissan.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/H37a4fae764cb44a08ac652f83d5e1307F/All-Size-Fuel-Line-Quick-Connector-Disconnect.jpg_350x350.jpg',
+                        'https://sc04.alicdn.com/kf/H29906952542b44e6a987fbbd4e3b8c84R/VVT-Valve-For-Kia-Toyota-RAV-4.jpg_350x350.jpg',
+                  ]
+                }
+              })
+            </script>
+        </table>
+        </div>
+    </div><!-- 黑色背景盒子end -->
+     <!-- 燃烧背景盒子 -->
+     <div class="container" style=" padding: 100px;;width: 1900px;background-size: 1900px;background-image: url('https://sc02.alicdn.com/kf/H9780918eb5bf4aa388ffa4556eae6995C.jpg');">
+      <!-- 公司介绍 -->
+      <div class="container" style="width: 1200px; ">
+        <img src="/static/img/blk_banner1.png" alt="">
+        <img style="border-left: red 1px solid; border-right: red 1px solid ;width:1200px" src="/static/img/company_introduce.png" alt="">
+        <img src="/static/img/blk_banner2.png" alt="">
+      </div>
+      <!-- 燃烧背景盒子end -->
+    </div>
+  </div>
+<header id="copyrightContent"></header>
+   </body>
+   <!-- #todofooter -->
+  <footer>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#topContent").load("top.html");
+        $("#headContent").load("head.html");
+        $("#copyrightContent").load("copyright.html");
+      });
+    </script>
+    <!-- #TODO 滚动条有条件跟踪 -->
+    <!-- 获取滚动条高度 -->
+    </script>
+    <script type="text/javascript">
+      var scrollFunc = function(e) {
+        //获取滚动条到顶部的垂直高度
+        console.log($(document).scrollTop());
+        // 大于200时蓝色导航条跟踪窗口
+        if(parseInt($(document).scrollTop())>=200){
+          $('.ul1:eq(0)').css('position','fixed')
+          $('.ul1:eq(0)').css('top','0')
+        }
+        else{
+          $('.ul1:eq(0)').css('position','relative')
+          $('.ul1:eq(0)').removeAttr('top')
+        }
+        
+
+      }
+      //给页面绑定滑轮滚动事件  
+      if (document.addEventListener) { //firefox  
+        document.addEventListener('DOMMouseScroll', scrollFunc, false);
+      }
+      //滚动滑轮触发scrollFunc方法  //ie 谷歌  
+      window.onmousewheel = document.onmousewheel = scrollFunc;
+    </script>
+    <!-- 销售员*6:旋转 -->
+       <!-- 销售员*6:旋转JS:旋转730度 -->
+       <script>
+        $('.ppl').hover(function(){
+          $(this).find('img:eq(0)').css('-webkit-transform','rotateY(400deg)')
+          $(this).find('img:eq(0)').css('-webkit-transition','-webkit-transform 1s linear')
+        },function(){
+          $(this).find('img:eq(0)').css('-webkit-transform','rotateY(0deg)')
+          $(this).find('img:eq(0)').css('-webkit-transition','-webkit-transform 1s linear')
+        })
+      </script>
+    <!-- 入口函数:页面滚到中间 -->
+    <script>
+      $(function(){
+        // 页面居中:在小窗口浏览器中右滚
+        var windowWidth=window.innerWidth
+        console.log('页面宽度',windowWidth)
+        if(windowWidth<=1280){
+         // 往右边滚动窗口
+         window.scrollTo(330,0)
+     
+        }
+      })
+     
+     </script>
+              <!-- 产品组方框按钮JS:绑定点击事件 -->
+              <script>
+                // 入口函数:隐藏PCV阀和油滤器产品组,默认显示滤清器(中间) 滤清器灰色图片滤清器灰色图片
+                $(function(){
+                  // 隐藏PCV阀和油滤器产品组,默认显示滤清器(中间)
+                  $('#oil_filter').css('display','none')
+                  $('#pcv_valve').css('display','none')
+                  // 滤清器灰色图片
+                  $('#air_filter_btn img').attr('src','/static/img/grey_banner.png')
+                })
+                // 绑定三个产品组按钮点击事件:点击显示对应产品组;按钮变成灰色
+                  // pcv阀
+                  $('#pcv_valve_btn').click(function(){
+                    // 显示PCV阀产品组,隐藏其余两个
+                    $('#oil_filter').css('display','none')
+                    $('#pcv_valve').css('display','flex')
+                    $('#pcv_valve').css('animation','fadein0to1move 1s')
+                    $('#air_filter').css('display','none')
+                    // 图片变灰色,其余2图片变成红色
+                    $('#pcv_valve_btn img').attr('src','/static/img/grey_banner.png')
+                    $('#air_filter_btn img').attr('src','/static/img/red_banner.png')
+                    $('#oil_filter_btn img').attr('src','/static/img/red_banner.png')
+                  })
+                  // 滤清器
+                  $('#air_filter_btn').click(function(){
+                    // 显示滤清器产品组,隐藏其余两个
+                    $('#oil_filter').css('display','none')
+                    $('#pcv_valve').css('display','none')
+                    $('#air_filter').css('display','flex')
+                    $('#air_filter').css('animation','fadein0to1move 1s')
+                    // 图片变灰色,其余2图片变成红色
+                    $('#pcv_valve_btn img').attr('src','/static/img/red_banner.png')
+                    $('#air_filter_btn img').attr('src','/static/img/grey_banner.png')
+                    $('#oil_filter_btn img').attr('src','/static/img/red_banner.png')
+                  })
+                  // 油滤器
+                  $('#oil_filter_btn').click(function(){
+                    // 显示油滤器产品组,隐藏其余两个
+                    $('#oil_filter').css('display','flex')
+                    $('#oil_filter').css('animation','fadein0to1move 1s')
+                    $('#pcv_valve').css('display','none')
+                    $('#air_filter').css('display','none')
+                    // 图片变灰色,其余2图片变成红色
+                    $('#pcv_valve_btn img').attr('src','/static/img/red_banner.png')
+                    $('#air_filter_btn img').attr('src','/static/img/red_banner.png')
+                    $('#oil_filter_btn img').attr('src','/static/img/grey_banner.png')
+                  })
+              </script>
+              <!-- 移入显示幕布和最小起订量JS -->
+              <script>
+      // 产品图片的上层的上层盒子hover:两个函数修改CSS
+      $('.yu_bbtp').hover(
+        // 移入
+        function(){
+          // 修改幕布和最小起订量display属性使其显示 
+          // $('.min_order,.red_curtain').css('display','block')
+          // this.querySelector('.min_order,.red_curtain')
+          $(this).find('.red_curtain').css('animation','fadein 0.5s linear forwards')
+          // $(this).parent().children('.red_curtain').css('animation','fadein 1s linear forwards')
+          // $(this).parent().children('.red_curtain').css('display','block')
+        },
+        // 移出
+        function(){
+          // 修改幕布和最小起订量display属性使其隐藏
+          // $('.min_order,.red_curtain').css('display','none')
+          $(this).find('.red_curtain').css('animation','fadeout 0.5s linear forwards')
+          // $(this).parent().children('.red_curtain').css('animation','fadeout 1s linear ')
+          // $(this).parent().children('.red_curtain').css('animation','fadeout 1s linear ')
+          // $(this).parent().children('.red_curtain').css('display','none')
+          // $('this').next().css('display','none')
+
+      })
+     </script>
+    
+     <!-- #TODO 执照轮播图 -->
+              <!-- 左右箭头拉动图片轮播图JS:通过首图左边距动画+最后一张假图+极限值直接设定边距 -->
+              <script>
+                // 激活小圆点样式函数:输入下标
+                function activate_spot(i){
+                  $('.spot').eq(i).css('backgroundColor','red')
+                  $('.spot').eq(i).css('opacity','1')
+                  if(i==0){
+                    //激活小园点1 失活小圆点2 
+                    $('.spot').eq(1).css('backgroundColor','white')
+                   $('.spot').eq(1).css('opacity','0.5')
+                  }
+                  else if(i==1){
+                    //激活小园点2 失活小圆点1
+                    $('.spot').eq(0).css('backgroundColor','white')
+                   $('.spot').eq(0).css('opacity','0.5')
+                  }
+                }
+                //0.入口函数:设圆点1为红色并且非透明
+                $(function(){
+                  $('.spot:eq(0)').css('backgroundColor','red')
+                  $('.spot:eq(0)').css('opacity','1')
+                })
+
+                // 一.左箭头点击事件0503:ok
+                $('.red_arrow:eq(0)').click(function(){
+                  // 获取左箭头
+                  var leftRedArrow= $('.red_arrow:eq(0)')
+                  // 获取图片1
+                  var certificate1=$('#certificate>img:eq(0)')
+                  var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                  console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2192,-1096,0)
+                  // 当边距为0:0到-1096 
+                  if(marginLeft==0){
+                    console.log('左边距0')
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                    // 激活对应小圆点:2
+                    activate_spot(1)
+                  }
+                  // 当边距为-1096:-1096到-2192 
+                 else if(marginLeft==-1096){
+                    console.log('左边距-1096')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-1096to-2192 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activate_spot(0)
+                  }
+                  //当边距为-2192:2192并回到0,并拉动0到-1096 
+                  else if(marginLeft==-2192){
+                    console.log('左边距-2192')
+                    certificate1.css('marginLeft','0')//回到0
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:2
+                    activate_spot(1)
+                    
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    console.log('左边距不是0,-1096,-2192无动作')
+                  }
+                })
+                // 二.右箭头点击事件
+                $('.red_arrow:eq(1)').click(function(){
+                  // 获取右箭头
+                  var rightRedArrow= $('.red_arrow:eq(1)')
+                  // 获取图片1
+                  var certificate1=$('#certificate>img:eq(0)')
+                  var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')+1096+'px'
+                  console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2192,-1096,0)
+                  // 当边距为0:切换到-2192 ,从-2192到-1096
+                  if(marginLeft==0){
+                    console.log('边距为0:切换到-2192 ,从-2192到-1096')
+                    certificate1.css('marginLeft','-2192')//切换到-2192
+                    // 用动画:从-2192到-1096
+                    certificate1.css('animation','scrollPic-2192to-1096 1s forwards')
+                    // 激活对应小圆点:2
+                    activate_spot(1)
+                  }
+                  // 当边距为-1096:-1096到0   
+                  else if(marginLeft==-1096){
+                    console.log('左边距-1096')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-1096to0 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activate_spot(0)
+                    
+                  }
+                  //当边距为-2192:2192并回到0,并拉动0到-1096 
+                  else if(marginLeft==-2192){
+                    console.log('左边距-2192')
+                    // 用动画:从-2192到-1096
+                    certificate1.css('animation','scrollPic-2192to-1096 1s forwards')                    
+                    // 激活对应小圆点:2
+                    activate_spot(1)
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    console.log('左边距不是0,-1096,-2192无动作')
+                  }
+                })
+                // 三.左右小圆点拉动图片JS
+                  // 1.圆点1点击事件:变成红色,显示图1或者图3时无动作,图2时拉动图1左边距-1096到0,把圆点2变成白色半透明
+                  var spot1=$('.spot:eq(0)')//获取元素圆点1
+                  var spot2=$('.spot:eq(1)')//获取元素圆点2
+                  $('.spot:eq(0)').click(function(){
+                       
+                        // 把圆点1变成红色不透明
+                        // 把圆点2变成白色半透明
+                        
+                        // 判断边距
+                        // 获取图片1
+                        var certificate1=$('#certificate>img:eq(0)')
+                        //获取左边距
+                        var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                        var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                         //当为三大边距时激活圆点1
+                         if(marginLeft==0||marginLeft==-1096||marginLeft==-2192){
+                            activate_spot(0)
+                         } 
+                         console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                         // 当边距为-1096:-1096到-2192 ;其他情况下无动作
+                         if(marginLeft==-1096){
+                          console.log('圆点1:左边距-1096')
+                          console.log('左边距-1096')
+                          // 用动画
+                          certificate1.css('animation','scrollPic-1096to0 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                        }
+                          //当边距为-2192:2192并回到0,并拉动0到-1096 
+                        else if(marginLeft==-2192){
+                          var certificate1=$('#certificate>img:eq(0)')
+                          console.log('左边距-2192回到0')
+                          certificate1.css('marginLeft','0px')//回到0
+
+                          
+                        }
+                       }
+                      
+                       )
+                       // 2.圆点2点击事件
+                      $('.spot:eq(1)').click(function(){
+                        
+                        // // 把圆点2变成红色不透明
+                        // spot2.css('backgroundColor','red');
+                        // spot2.css('opacity','1')
+                        // // 把圆点1变成白色半透明
+                        // spot1.css('backgroundColor','white');
+                        // spot1.css('opacity','0.5')
+                        // 获取图片1
+                        var certificate1=$('#certificate>img:eq(0)')
+                        //获取左边距
+                        var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                        var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                        console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                        //当为三大边距时激活圆点2
+                        if(marginLeft==0||marginLeft==-1096||marginLeft==-2192){
+                           activate_spot(1)
+                        } 
+                        // 当边距为-1096:-1096到-2192;其他情况无动作
+                        if(marginLeft==-1096||marginLeft==0){
+                            console.log('圆点2:左边距-1096或者0:设边距为0')
+                            certificate1.css('marginLeft','0px')//设为0
+                            // 用动画
+                            certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                    
+                        }
+                  })
+                // 轮播图自动运行
+                function scrollPic(){
+                   // 获取左箭头
+                   var leftRedArrow= $('.red_arrow:eq(0)')
+                  // 获取图片1
+                  var certificate1=$('#certificate>img:eq(0)')
+                  var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                  // console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                  // 根据左边距选择动画:边距:(-2192,-1096,0)
+                  // 当边距为0:0到-1096 
+                  if(marginLeft==0){
+                    console.log('左边距0')
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                    // 激活对应小圆点:2
+                    activate_spot(1)
+                  }
+                  // 当边距为-1096:-1096到-2192 
+                 else if(marginLeft==-1096){
+                    // console.log('左边距-1096')
+                    // 用动画
+                    certificate1.css('animation','scrollPic-1096to-2192 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:1
+                    activate_spot(0)
+                  }
+                  //当边距为-2192:2192并回到0,并拉动0到-1096 
+                  else if(marginLeft==-2192){
+                    // console.log('左边距-2192')
+                    certificate1.css('marginLeft','0')//回到0
+                    // 用动画
+                    certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                    // //再次获取左边距
+                    // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                    // 激活对应小圆点:2
+                    activate_spot(1)
+                    
+                  }
+                  //当边距非以上(无动作)
+                  else{
+                    // console.log('左边距不是0,-1096,-2192无动作')
+                  }
+                }
+                // 间隔2s播放轮播图
+                setInterval(function(){scrollPic()},2000)
+
+              </script>
+    <!-- 绑定鼠标移入事件:鼠标移入一级标签显示二级菜单 -->
+    <script>
+      // 绑定Products标签 
+      // 移入显示
+      $('.ul1>li:eq(1)').mouseover(function(){
+        
+        //修改li隐藏 display:block
+        $('.ul1>li:eq(1)>ul').css('display','block')
+      })
+      // 移出隐藏
+      $('.ul1>li:eq(1)').mouseout(function(){
+        
+        //修改li隐藏 display:block
+        $('.ul1>li:eq(1)>ul').css('display','none')
+      })
+       // 绑定Profile标签 
+      // 移入显示
+      $('.ul1>li:eq(2)').mouseover(function(){
+        
+        //修改li隐藏 display:block
+        $('.ul1>li:eq(2)>ul').css('display','block')
+      })
+      // 移出隐藏
+      $('.ul1>li:eq(2)').mouseout(function(){
+        
+        //修改li隐藏 display:block
+        $('.ul1>li:eq(2)>ul').css('display','none')
+      })
+    </script>
+    <!-- 气泡框js :z-index无效-->
+    <script>
+      // 指向Multispecialty supplier时显示气泡框
+      $('#supplier').mouseover(function(){
+        // 修改气泡框的display属性
+        $('.box,.cont,.triangle').css('display','block')
+        //指向字体时减少菜单的z-index
+        $('.ul1,.li1,.ul2,.li2').css('z-index','-1')
+
+      })
+        // 鼠标移出Multispecialty supplier时隐藏气泡框
+        $('#supplier').mouseout(function(){
+        // 修改气泡框的display属性
+        $('.box,.cont,.triangle').css('display','none')
+        //指向字体时减少菜单的z-index
+        $('.ul1,.li1,.ul2,.li2').css('z-index','6')
+      })
+      
+    </script>
+    <!-- 搜索框JS -->
+    <script>
+      // 移入搜索框变橙色
+      $('#search').mouseover(function(){
+        // 修改气搜索框属性
+        $('#search').attr('style','margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(191,74,0)')
+     })
+       // 鼠标移出搜索框变原来
+       $('#search').mouseout(function(){
+        // 修改气搜索框属性
+        $('#search').attr('style','margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(171,10,4)')
+     })
+      // 点击搜索框变橙色
+      $('#search').click(function(){
+        // 修改气搜索框属性
+        $('#search').attr('style','margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(191,74,0)')
+     })
+    </script>
+    <!-- 下拉箭头JS -->
+    <script>
+      /*移入Products旋转180度箭头*/
+      $('.ul1>li:eq(1)').mouseover(function(){
+        // 旋转180度箭头 transform:rotate(角度deg)
+        $('.array:eq(0)').css('transform','rotate(180deg)')
+        // 0.1s内执行过度动画
+        $('.array:eq(0)').css('transition','transform 0.1s linear')
+      })
+      // 移出Products改回0度
+      $('.ul1>li:eq(1)').mouseout(function(){
+        // 改回0度
+        $('.array:eq(0)').css('transform','rotate(0deg)')
+        // 0.1s内执行过度动画
+        $('.array:eq(0)').css('transition','transform 0.1s linear')
+      })
+      /* 移入Profile旋转180度箭头*/
+      $('.ul1>li:eq(2)').mouseover(function(){
+        // 旋转180度箭头 transform:rotate(角度deg)
+        $('.array:eq(1)').css('transform','rotate(180deg)')
+        // 0.1s内执行过度动画
+        $('.array:eq(1)').css('transition','transform 0.1s linear')
+      })
+      // 移出Profile改回0度
+      $('.ul1>li:eq(2)').mouseout(function(){
+        // 改回0度
+        $('.array:eq(1)').css('transform','rotate(0deg)')
+        // 0.1s内执行过度动画
+        $('.array:eq(1)').css('transition','transform 0.1s linear')
+     })
+    </script>
+    <!-- 爱心&FollowJS -->
+    <script>
+        /* 鼠标移入:原样式变深色否则不变*/
+        $('#love').mouseover(function(){
+          //css判断颜色:橙色就不变,否则变回原样
+          var color=$('#love').css('color')//获取color属性
+          console.log(color)
+          console.log(color=='rgb(204,86,1)')
+          var style=$('#love').attr('style')
+          console.log(style)
+          if(color=='rgb(204, 86, 1)'){
+            console.log('橙色就不变')
+          }
+          else{
+            $('#love').attr('style','cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(94,110,120);;vertical-align: middle;display:inline-block;font-size: 15; ')
+          }
+      })
+      // 移出变回原样或者橙色
+      $('#love').mouseout(function(){
+        //css判断颜色:橙色就不变,否则变回原样
+        var color=$('#love').css('color')
+        console.log(color)
+        console.log(color=='rgb(204,86,1)')
+        
+        if(color=='rgb(204, 86, 1)'){
+          console.log('橙色就不变')
+        }
+        else{
+          $('#love').attr('style','-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(125,146,163);;vertical-align: middle;display:inline-block;font-size: 15; ')
+
+        }
+      })
+      // 点击变成橙色&或者灰色
+      $('#love').click(function(){
+        //获取颜色
+        var color=$('#love').css('color')
+        console.log(color)
+        //css判断颜色:橙色就变灰色,灰色就变橙色
+        //橙色变灰色
+        if(color=='rgb(204, 86, 1)'){
+          console.log('橙色就变灰色')
+          $('#love').attr('style','cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(94,110,120);;vertical-align: middle;display:inline-block;font-size: 15; ')
+          var color=$('#love').css('color')
+           console.log(color)
+        }
+        //灰色就变橙色(调用动画:animation-duration:0.5s;animation-name:bigSmall:0.5秒执行bigsmall)
+        else{
+          $('#love').attr('style','cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.8;color: rgb(204,86,1);vertical-align: middle;display:inline-block;font-size: 15; animation-duration:0.5s;animation-name:bigSmall')
+
+        }
+     })
+    </script>
+   
+  
+  </footer>
+ </html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  <!-- <style type="text/css">
+      div{
+      /*加载背景图*/
+       background-image:'https://ae01.alicdn.com/kf/HTB1rgq9bUGF3KVjSZFmq6zqPXXaV.jpg';
+  </style> -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <!-- vue导入 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <style type="text/css">
+  /* 缩略图移入边框变红 */
+  /* 背景图 */
+  /* body #banner{
+  background-image: url("/static/img/11001_1.jpg");
+} */
+/* 分隔横幅css:背景图 */
+#banner {
+   /* Background pattern from Toptal Subtle Patterns */
+   background-image: url("http://127.0.0.1:8000/static/img/banner.png");
+   background-size: 1200px 56px;
+   height: 56px;
+   width: 98%;
+}
+  .small_pic:hover{
+    border: 3px solid red;
+    /* margin-top: 5px; */
+  }
+    /* 盒子模型 */
+  .td{
+      /* background-color: lightgrey; */
+      /* width: 300px; */
+      /* border: 25px solid green; */
+      padding: 25px;
+      /* margin: 25px; */
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  a, img {
+    border: 0;
+    text-decoration: none;
+  }
+  body {
+    font-family: "微软雅黑", "宋体", "黑体", Arial;
+  }
+  /* focus */
+  .xmSlide {
+    background-color: #022c5e;
+  }
+  .xmSlide_01 {
+    height: 639px;
+    background: url(/static/images/focus01.jpg) no-repeat center center;
+  }
+  .xmSlide_02 {
+    height: 639px;
+    background: url(/static/images/focus02.jpg) no-repeat center center;
+  }
+  .xmSlide_03 {
+    height: 639px;
+    background: url(/static/images/focus03.jpg) no-repeat center center;
+  }
+  .xmSlide-pagination {
+    background-color: #fff;
+    padding-top: 10px;
+    text-align: center;
+    height: 20px;
+  }
+  .xmSlide-pagination li {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+  }
+  .xmSlide-pagination li a {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    text-indent: -9999px;
+    background-color: #ccd1d9;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    overflow: hidden;
+  }
+  .xmSlide-pagination li a.active {
+    background-color: #656d78;
+  }
+  .xmSlide-control {
+    overflow: hidden;
+  }
+  .btn {
+    width: 950px;
+    position: absolute;
+    left: 50%;
+    margin-left: -475px;
+    top: 0;
+    z-index: 9999;
+  }
+  .btn span {
+    display: block;
+    text-align: right;
+    padding-right: 158px;
+  }
+  .btn p {
+    padding: 410px 78px 0 0;
+    text-align: right;
+  }
+  .btn p a {
+    width: 133px;
+    height: 36px;
+    display: inline-block;
+    margin-right: 10px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+  }
+  .btn p a.item1 {
+    background-color: #ff9000;
+    -webkit-box-shadow: 0 2px rgba(13,47,88,.19);
+    -moz-box-shadow: 0 2px rgba(13,47,88,.19);
+    box-shadow: 0 2px rgba(13,47,88,.19);
+  }
+  .btn p a.item2 {
+    background-color: #5e95e1;
+    -webkit-box-shadow: 0 2px rgba(13,47,88,.19);
+    -moz-box-shadow: 0 2px rgba(13,47,88,.19);
+    box-shadow: 0 2px rgba(13,47,88,.19);
+  }
+  </style>
+  <script type="text/javascript" src="/static/js/jquery18.js"></script>
+  <script type="text/javascript" src="/static/js/slides.js"></script>
+  <script type="text/javascript">
+  $(function(){
+    $("#xmSlide").xmSlide({
+      width: 950,
+      height: 639,
+      responsiveWidth:710,
+      pagination: {
+        effect: "fade"  //可换成"slide"
+      },
+      effect: {
+        fade: {
+          speed: 400
+        }
+      },
+      play: {
+        effect: "fade", //可换成"slide"
+        interval: 4000,
+        auto: true,
+        pauseOnHover: true,
+        restartDelay: 2500
+      }
+    });
+  });
+  </script>
+  </head>
+  <!-- <body style="background-color: rgb(245, 239, 239)"> -->
+  <body id="rt">
+  <!-- 导航 -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="https://rtyperautoparts.aliexpress.com">Rtyper</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li ><a href="/index">Home</a></li>
+          <!-- <li class="active"><a href="#">Product</a></li> -->
+          <li ><a href="/search">Product</a></li>
+          <li><a href="#">About us</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" >
+          <li ><a href="#">Register</a></li>
+          <li style="margin-right: 10px;" ><a href="#">Sign in</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- 返回顶部按钮:span里箭头 -->
+  <div style="text-align: center; position:fixed;right:0;bottom:0;opacity: 0.5;background-color:white;width: 50px;height: 50px;" > <a href="#" style="position:fixed;right:5px;bottom:10px;font-size: 15px;">Top<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a></div>
+  <!-- <div class='container-fluid'><img src='https://ae01.alicdn.com/kf/HTB1rgq9bUGF3KVjSZFmq6zqPXXaV.jpg'></div> -->
+  <!-- 搜索  -->
+  <form method="get" action="/search/">
+    {% csrf_token %}
+    <div class="container-fluid"   >
+    <table  >
+      <tr>
+        <!-- <img src="/static/img/fob_log.jpg" height="100px" width="100px" alt=""> 商标-->
+        <!-- 商标 -->
+        <td style="padding-right: 50px;padding-bottom: 10px;"><h1 style="text-align: left;color:red;font-size: 45px;">FOB AUTOPARTS</h1></td>
+        <!-- 搜索按钮 -->
+        <td><input value="Search" type="submit" style="border-radius:5px 0px 0px 5px;border:0;color:white;background-color:red;width:100px;height:40px"></div>
+        <!-- 搜索框 -->
+        <td><input type="text" id="search" value="{{search_string}}" class="form-control" style="border-radius:0px 5px 5px 0px;height:40px;width:500px;border-color: red;" placeholder="title" name="search_string">
+        </td >
+    </tr>
+    <!-- 空行 分隔-->
+    <tr><td style="height:20px"></td></tr>
+    </table>
+  </div>
+  </form>
+  <!-- 分割线 -->
+<!-- <hr> -->
+<!-- 下方导航 -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+ 
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li ><a href="/search/?category=11">Micro Filter</a></li>
+        <!-- <li class="active"><a href="#">Product</a></li> -->
+        <li ><a href="/search/?category=21">O-ring</a></li>
+        <li><a href="/search/?category=22">Rubber Seal</a></li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+<script src="http://www.jq22.com/js/jq.js"></script>
+<div class="container">
+ <!--产品页: 产品图片 标题 型号 规格 购买 -->
+{% for item in list %}
+
+<!-- 产品主图&缩略图&标题&按钮  -->
+<table>
+  <!-- 产品主图  -->
+  <!--响应式布局 (根据大小缩放)img-responsive 灰色边框img-thumbnail  -->
+  <tr>
+      <!-- 视频  -->
+
+     <td   rowspan="9"  colspan="6">
+      <img class=" " id="main_pic" style="width: 600px;" src="/static/img/{{item.model}}_1.jpg" alt="No picture"></td></tr>
+      <!-- <video src="/static/vid/21092.mov"  controls="" style="width: 800px;display: none;" id="vid"></video> -->
+      </td>
+  </tr>
+      <!-- 标题 -->
+  <tr><td style="padding-left: 10px;padding-top:0px;height: 30px;" >  <span style="margin-left:0px;font-size: 20px; " id="title">{{item.title}}</span></td></tr>
+     <!-- 五星评价 -->
+     <tr>
+      <td style="padding-left: 0px;padding-top:0px;height: 30px;">
+          <style>
+            .star-box {
+                display: table;
+                /* position: absolute; */
+                left: 50%;
+                top: 50%;
+            }
+  
+            .star-box label {
+                float: right;
+                color: #999;
+          }
+  
+            .star-box label::after {
+                content: '★';
+                font-size: 28px;
+                padding: 5px;
+                display: inline-block;
+                line-height: 1;
+            }
+  
+            .star-box input:checked~label,
+            .star-box label:hover~label,
+            .star-box label:hover {
+                color: red;
+            }
+          </style>
+          <div style="margin-top:10px;padding:10px" class="star-box">
+            <input type="radio" name="star" id="star5" hidden />
+            <label for="star5"></label>
+    
+            <input type="radio" name="star" id="star4" hidden />
+            <label for="star4"></label>
+    
+            <input type="radio" name="star" id="star3" hidden />
+            <label for="star3"></label>
+    
+            <input type="radio" name="star" id="star2" hidden />
+            <label for="star2"></label>
+    
+            <input type="radio" name="star" id="star1" hidden />
+            <label for="star1"></label>
+        </div>
+      </td>
+    </tr>
+  <!-- 型号 -->
+  <tr><td style="padding-left: 10px;padding-top: 30px;margin-top:50px;height: 30px;"><span style="margin-top: 20px;padding-top: 50px;margin-left:0px;font-size: 20px;color:blue " id="model">Model:{{item.model}}</span></td></tr>
+
+  <!-- 数量(数字增减框) -->
+  <tr>
+      <td style="padding-left: 10px;padding-top:20px;height: 30px;">
+        <div class="p-quantity">
+          <span style="font-size: 20px;color: grey;">Quantity:</span>
+          <input type="button" style="margin-top:20px;width:25px;height:25px;" class="decrease" value="-">
+          <input type="text" style="width:50px;height:25px" class="quantity" value="1"/>
+          <input type="button" style="width:25px;height:25px" class="increase" value="+">
+        </div>      
+      </td>
+  </tr>
+  <!-- 定制服务 -->
+  <tr>
+    <td><span style="margin-left: 10px;font-size: 20px;color: grey;">Customization:</span><span style="margin-left: 10px;font-size: 20px;color: black;"> Customized logo& packaging</span >
+      <div></div> 
+
+    </td>
+  <!-- 保修服务 -->
+  <tr>
+    <td><span style="margin-left: 10px;font-size: 20px;color: grey;">Warranty:</span>
+      <span style="margin-left: 10px;font-size: 20px;color: black;">1 year</span>
+    </td>
+  </tr>
+  </tr>
+  <!-- 发货时间 -->
+  <tr>
+    <td>
+      
+    </td>
+  </tr>
+  <!-- 购买按钮 -->
+  <tr><td ><button class="" style="border-radius: 5px; color:white; width: 300px;height:50px ;background-color: orangered;border-color: orangered;" ><a style="color:white;font-size: 20px;" href="https://rtyperautoparts.aliexpress.com/store/1101407965/search?origin=y&SearchText={{item.title}}">Buy Now</a></button></td></tr>
+  <!-- 缩略图*4 -->
+  <tr>
+    <td ><img class="small_pic img-responsive img-thumbnail" id="pic1" onmouseover='$("#main_pic").attr("src","/static/img/{{item.model}}_1.jpg")'  style="margin-top: 5px; width: 80px;" src="/static/img/{{item.model}}_1.jpg" alt="No picture"></td>
+    <td ><img class="small_pic img-responsive img-thumbnail" id="pic2" onmouseover='$("#main_pic").attr("src","/static/img/{{item.model}}_2.jpg")'  style="margin-top: 5px;width: 80px;" src="/static/img/{{item.model}}_2.jpg" alt="No picture"></td>
+    <td ><img class="small_pic img-responsive img-thumbnail" id="pic3" onmouseover='$("#main_pic").attr("src","/static/img/{{item.model}}_3.jpg")'  style="margin-top: 5px;width: 80px;" src="/static/img/{{item.model}}_3.jpg" alt="No picture"></td>
+    <td ><img class="small_pic img-responsive img-thumbnail" id="pic4" onmouseover='$("#main_pic").attr("src","/static/img/{{item.model}}_4.jpg")'  style="margin-top: 5px;width: 80px;" src="/static/img/{{item.model}}_4.jpg" alt="No picture"></td>
+    <td ><img class="small_pic img-responsive img-thumbnail" id="pic4" onmouseover='$("#main_pic").attr("src","/static/img/{{item.model}}_5.jpg")'  style="margin-top: 5px;width: 80px;" src="/static/img/{{item.model}}_5.jpg" alt="No picture"></td>
+    <td ><img class="small_pic img-responsive img-thumbnail" id="pic4" onmouseover='$("#main_pic").attr("src","/static/img/{{item.model}}_6.jpg")'  style="margin-top: 5px;width: 80px;" src="/static/img/{{item.model}}_6.jpg" alt="No picture"></td>
+  </tr>
+</table>
+</div>
+  <!-- 分割线
+  <hr> -->  
+ <div class="container-fluid" style="background-color: rgb(245, 239, 239)" >
+   <div class="container">
+     <!-- 分隔横幅 -->
+     <div class="row"><div id="banner" style="background-color:white;border-radius: 5px;;margin: 10px;"></div></div>
+   </div>
+ </div>
+  
+<!-- 详情: 标题 大图 -->
+<!-- 外部背景灰色 -->
+<div class="container-fluid" style="background-color: rgb(245, 239, 239);" >
+  <div class="container" style="background-color: white;margin-bottom: 20px;">
+
+  <!-- 标签页导航 -->
+<ul class="nav nav-tabs" style="margin: 0px;margin-bottom: 10px;">
+  <!-- 详情按钮 -->
+  <li id="btn_description" role="presentation" style="width: 10%;" class="active"><a href="#description">Description</a></li>
+  <!-- 规格按钮:点击后隐藏详情页页,显示规格页 -->
+  <li id="btn_specification" role="presentation"><a href="#specification">Specification</a></li>
+</ul>
+<!-- 规格页:材料;尺寸;型号;数量;oe;产地 6个2*3表格 点击-->
+<table id="specification" style="display: none;font-size: 20px;">
+  <tr > 
+    <td style="width: 500px;padding :10px; "><span style="color:grey">Material:</span>{{item.material}}</td>
+    <td style="padding :10px;;"><span style="color:grey">Size:</span>{{item.length}}*{{item.width}}*{{item.height}}</td>
+  </tr>
+  <tr >
+    <td style="padding :10px;"><span style="color:grey">Model:</span>{{item.model}}</td>
+    <td style="padding :10px;"><span style="color:grey">QTY:100PCS</span></td>
+  </tr>
+  <tr style="padding :10px;">
+    <td style="padding :10px;"><span style="color:grey">oe:</span>{{item.oe}}</td>
+    <td style="padding :10px;"><span style="color:grey">place of original: </span>zhejiang,china</td>
+  </tr>
+</table>
+
+<table id="description" style="display: block;">
+  <!-- 标题 -->
+  <tr><td><h1>{{item.title}}</h1></td></tr>
+  <!-- 视频 -->
+  <tr><td><video src="/static/vid/{{item.model}}.mov"  controls="" style=" display: none;width: 100%;" id="vid"></video></td></tr>
+  <!-- 大图 -->
+  <tr><td><img src="/static/img/{{item.model}}_1.jpg" width="100%" alt="No picture"></td></tr>
+  <tr><td><img src="/static/img/{{item.model}}_2.jpg" width="100%" alt="No picture"></td></tr>
+  <tr><td><img src="/static/img/{{item.model}}_3.jpg" width="100%" alt="No picture"></td></tr>
+  <tr><td><img src="/static/img/{{item.model}}_4.jpg" width="100%" alt="No picture"></td></tr>
+  <tr><td><img src="/static/img/{{item.model}}_5.jpg" width="100%" alt="No picture"></td></tr>
+  <tr><td><img src="/static/img/{{item.model}}_6.jpg" width="100%" alt="No picture"></td></tr>
+  <!-- our service 横幅 -->
+  <tr><td><p style="font-size:13.3333px"><img width="100%" src="https://ae01.alicdn.com/kf/HTB1B_nXUmzqK1RjSZFLq6An2XXaZ.jpg" slate-data-type="image"></p></td></tr>
+  <!-- 横幅 -->
+  <tr><td>
+    <p style="font-size:13.3333px"><img width="100%" src="https://ae01.alicdn.com/kf/HTB1uA6pUcfpK1RjSZFOq6y6nFXa2.jpg" slate-data-type="image" data-spm-anchor-id="a2g0o.detail.1000023.i2.5f926e20WKqLNA"><span style="color:rgb(0, 0, 0)"><strong><span style="font-size:22px"><span> </span></span></strong></span></p>
+  </td>
+  </tr>
+  <!-- 常见问题 -->
+  <tr><td>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong data-spm-anchor-id="a2g0o.detail.1000023.i4.6cfe3210TYad9U">Q1. What is your packaging terms?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong data-spm-anchor-id="a2g0o.detail.1000023.i1.6cfe3210TYad9U">A: Generally speaking, we put the goods in a neutral white box and a brown carton. If you have a legally registered patent,</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>We can package the item into your brand box after receiving your authorization.</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Q2. What is your payment terms?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>A: Alipay, credit card.</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Q3. What is your shipping terms?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>A: CIP</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Q4. How is your delivery time?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>A: Generally speaking, it takes 3 to 15 days after receiving the payment. The exact delivery time depends on</strong></span></span></span></p>
+    <p data-spm-anchor-id="a2g0o.detail.1000023.i6.6cfe3210TYad9U"><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>On the project.</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Q5. Can you produce according to the sample?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong data-spm-anchor-id="a2g0o.detail.1000023.i5.6cfe3210TYad9U">A: Yes, we can produce it through your samples or technical drawings. We can make molds and fixtures.</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Q6. What is your sample policy?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>A: If there are ready-made parts in stock, we can provide samples, but the customer must pay for the sample cost and courier.</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Q7. Do you test all the goods before delivery?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>A: Yes, we have 100% test before delivery.</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>Question 8: How do you make our business long-term and good relationship?</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong>A: 1. We maintain good quality and competitive prices to ensure our customers benefit;</strong></span></span></span></p>
+    <p><span style="color:rgb(0, 0, 0)"><span style="font-family:&quot;lucida sans unicode&quot;, &quot;lucida grande&quot;, sans-serif"><span style="font-size:22px"><strong data-spm-anchor-id="a2g0o.detail.1000023.i2.6cfe3210TYad9U">2. We respect each customer as our friend, we sincerely do business with them and make friends with them, no matter where they come from.</strong></span></span></span></p>
+    <p style="font-size:13.3333px"><img src="https://ae01.alicdn.com/kf/HTB1WS2jUkPoK1RjSZKbq6x1IXXaJ.jpg" slate-data-type="image"><img width="100%" src="https://ae01.alicdn.com/kf/H8112167bd02248dd905b69db61a1806fK.jpg" slate-data-type="image" data-spm-anchor-id="a2g0o.detail.1000023.i4.5f926e20WKqLNA"></p>
+  </td>
+  </tr>
+</table>
+</div>
+</div>
+<!-- 底部栏 -->
+<div class=" jumbotron text-center" style="margin-bottom:0;background-color: grey;height: 100px;">
+  <p style="color:white">©️2010-2023 Fob Auto Parts co.,ltd. All rights reserved. </p>
+</div>
+{% endfor %}
+<!-- 标签页导航JS -->
+<script>
+  // 1.绑定规格按钮点击事件&改变按钮class=active状态
+  $('#btn_specification').click(function(){
+  // 点击后隐藏详情页,显示规格页
+    //显示规格页
+    $('#specification').css('display','block')
+    // 隐藏详情页
+    $('#description').css('display','none')
+    // 规格按钮高亮active
+    $('#btn_specification').attr('class','active')
+    // 详情按钮取消高亮
+    $('#btn_description').attr('class','')
+
+  })
+  // 2.绑定详情按钮点击事件&改变按钮class=active状态
+  $('#btn_description').click(function(){
+   // 点击后显示详情页,隐藏规格页
+    //显示详情页
+    $('#description').css('display','block')
+    // 隐藏规格页
+    $('#specification').css('display','none')
+    // 详情按钮高亮active
+    $('#btn_description').attr('class','active')
+    // 规格按钮取消高亮
+    $('#btn_specification').attr('class','')
+  })
+ 
+</script>
+<!-- 数字增减框JS -->
+<script>
+  //获取所有+按钮
+var increment = document.getElementsByClassName("increase");
+
+for (var i = 0; i < increment.length; i++) {
+   //为a标签添加index属性，用于记录下标
+    increment[i].index = i;
+
+   //点击+数量增加的功能函数
+   increment[i].onclick = function () {
+       var flag = this.index;
+
+       //获取当前按钮对应的数量框
+       var q = document.getElementsByClassName("quantity")[flag];
+
+       var newvalue = parseInt(q.value) + 1;
+
+       q.setAttribute('value', newvalue);
+
+       //更新此商品对应的‘小计’
+       changeSum(flag, newvalue);
+   }
+}
+ //获取所有-按钮
+   var decrement=document.getElementsByClassName('decrease');
+
+   //点击-数量减少的功能函数
+   for(var j=0;j<decrement.length;j++)
+   {
+       decrement[j].index=j;
+
+       decrement[j].onclick=function()
+       {
+           var flag=this.index;
+            //获取当前a标签对应的那个数量框
+          var q=document.getElementsByClassName("quantity")[flag];
+
+          if(parseInt(q.value)>1)
+          {
+           var newvalue=parseInt(q.value)-1;
+
+           q.setAttribute('value',newvalue);
+
+           changeSum(flag,newvalue);
+          }
+       }
+   }
+//更新每个商品的‘小计’
+function changeSum(flag, num) {
+   //获取对应商品单价所在的标签
+   var temp = document.getElementsByClassName("onlyPrice")[flag];
+
+   //获取商品单价
+   var unitPrice = temp.innerHTML;
+
+   //计算新的小计价格
+   var newPrice = (parseFloat(unitPrice) * (num*1.0)).toFixed(1);
+   //获取当前“小计”的标签
+   var sum = document.getElementsByClassName("onlySum")[flag];
+
+   sum.innerHTML = newPrice;
+}
+</script>
+
+</body>
+</html>

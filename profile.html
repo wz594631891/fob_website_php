@@ -1,0 +1,125 @@
+<html>
+  <head>
+    {%include 'head.html'%}
+  </head>
+  <body>
+    {%include 'top.html'%}
+    <!-- 正文 -->
+    <!-- performance大框 -->
+    <!-- 960*530 -->
+    <!-- performance大框CSS -->
+    <style>
+      #reviews{
+        margin-top: 30px;
+        margin-left:30px;
+        border-radius: 5px;
+        background-color: white;
+        width:960px;
+        overflow: hidden;
+      }
+      #profile_detail{
+        margin-top: 30px;
+        margin-left:30px;
+        border-radius: 5px;
+        background-color: white;
+        width:960px;
+        overflow: hidden;
+      }
+      #profile{
+        margin-top: 30px;
+        margin-left:30px;
+        border-radius: 5px;
+        background-color: white;
+        width:960px;
+        overflow: hidden;
+      }
+      body{
+        background-color: rgb(245, 245, 245);
+        position: relative;
+      }
+      .container-flow{
+        position: relative;
+      }
+      #contact_supplier{
+        width:960px;
+        height:390px;
+        width: 220px;
+        left:1010px;
+        top:0px;
+        border-radius: 5px;
+        background-color: white;
+        position: absolute;
+        overflow: hidden;
+      }
+      #performance_div{
+        width:960px;
+        height:530px;
+        margin-left:30px;
+        margin-top:20px;
+        border-radius: 5px;
+        background-color: white;
+        position: relative;
+      }
+      #performance{
+        margin-left:30px;
+        margin-top:20px;
+        
+      }
+      video,#video{
+        width: 438px;
+        height:255px;
+        position: absolute;
+        right: 50px;
+        top: 80px;
+        border-radius: 5px;
+      }
+      #pic3{
+        position: absolute;
+        right: 80px;
+        top: 360px;
+        padding: 0;
+      }
+    </style>
+<div class="container-flow">
+  <div id="performance_div">
+    <!-- performance img -->
+    <div>
+      <img id="performance" src="/static/img/profile_performance.png" alt="">
+    </div>
+    <!-- 视频 -->
+      <video controls preload="metadata" autoplay="" muted="" loop="" poster="https://s.alicdn.com/@sc01/kf/H42e2f986adcf4ee3ab8807511d735195o.jpg" playsinline="" webkit-playsinline=""><source src="//cloud.video.alibaba.com/play/u/2153292369/p/1/e/6/t/1/d/hd/399938410249.mp4"></video>
+      <!-- <div id="pic3" class="media-tab-item-border"><div class="media-tab-item" style="background-image: url(&quot;https://s.alicdn.com/@sc01/kf/Sfa5534842f6643b49990a051e6fe5e6c4.jpg_250x250.jpg&quot;);" data-spm-anchor-id="a2700.shop_cp.205044.i5.6c206b0eUZvRhn"><span class="hover-span tab-text" style="-webkit-line-clamp: 2; width: auto;" data-spm-anchor-id="a2700.shop_cp.205044.i3.6c206b0eUZvRhn">Production(5)</span></div></div> -->
+      <div id="pic3">
+        <img  src="/static/img/overview.png" alt="">
+        
+      </div>
+    </div>
+    <!-- 联络框 -->
+    <div id="contact_supplier">
+      <a href="https://fobwerks.en.alibaba.com/company_profile.html?spm=a2700.shop_co.88.44">
+        <img  src="/static/img/contact_supplier.png" alt="">
+
+      </a>
+  </div>
+  <!-- 介绍 -->
+  <div id="profile">
+    <img  src="/static/img/profile.png" alt="">
+  </div>
+  <div id="profile_detail">
+
+    <img  src="/static/img/profile_detail.png" alt="">
+  </div>
+  <!-- 评论 -->
+  <div id="reviews" >
+    <img  src="/static/img/reviews.png" alt="">
+    
+  </div>
+</div>
+      {%include 'copyright.html'%}
+  </body>
+  <footer>
+    
+    {%include 'footer.html'%}
+
+  </footer>
+</html>

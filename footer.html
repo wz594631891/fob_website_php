@@ -1,0 +1,503 @@
+  <!-- #TODO 滚动条有条件跟踪 -->
+    <!-- 获取滚动条高度 -->
+  </script>
+  <script type="text/javascript">
+    var scrollFunc = function(e) {
+      //获取滚动条到顶部的垂直高度
+      console.log($(document).scrollTop());
+      // 大于200时蓝色导航条跟踪窗口
+      if(parseInt($(document).scrollTop())>=200){
+        $('.ul1:eq(0)').css('position','fixed')
+        $('.ul1:eq(0)').css('top','0')
+      }
+      else{
+        $('.ul1:eq(0)').css('position','relative')
+        $('.ul1:eq(0)').removeAttr('top')
+      }
+      
+
+    }
+    //给页面绑定滑轮滚动事件  
+    if (document.addEventListener) { //firefox  
+      document.addEventListener('DOMMouseScroll', scrollFunc, false);
+    }
+    //滚动滑轮触发scrollFunc方法  //ie 谷歌  
+    window.onmousewheel = document.onmousewheel = scrollFunc;
+  </script>
+  <!-- 销售员*6:旋转 -->
+     <!-- 销售员*6:旋转JS:旋转730度 -->
+     <script>
+      $('.ppl').hover(function(){
+        $(this).find('img:eq(0)').css('-webkit-transform','rotateY(400deg)')
+        $(this).find('img:eq(0)').css('-webkit-transition','-webkit-transform 1s linear')
+      },function(){
+        $(this).find('img:eq(0)').css('-webkit-transform','rotateY(0deg)')
+        $(this).find('img:eq(0)').css('-webkit-transition','-webkit-transform 1s linear')
+      })
+    </script>
+  <!-- 入口函数:页面滚到中间 -->
+  <script>
+    $(function(){
+      // 页面居中:在小窗口浏览器中右滚
+      var windowWidth=window.innerWidth
+      console.log('页面宽度',windowWidth)
+      if(windowWidth<=1280){
+       // 往右边滚动窗口
+       window.scrollTo(330,0)
+   
+      }
+    })
+   
+   </script>
+            <!-- 产品组方框按钮JS:绑定点击事件 -->
+            <script>
+              // 入口函数:隐藏PCV阀和油滤器产品组,默认显示滤清器(中间) 滤清器灰色图片滤清器灰色图片
+              $(function(){
+                // 隐藏PCV阀和油滤器产品组,默认显示滤清器(中间)
+                $('#oil_filter').css('display','none')
+                $('#pcv_valve').css('display','none')
+                // 滤清器灰色图片
+                $('#air_filter_btn img').attr('src','/static/img/grey_banner.png')
+              })
+              // 绑定三个产品组按钮点击事件:点击显示对应产品组;按钮变成灰色
+                // pcv阀
+                $('#pcv_valve_btn').click(function(){
+                  // 显示PCV阀产品组,隐藏其余两个
+                  $('#oil_filter').css('display','none')
+                  $('#pcv_valve').css('display','flex')
+                  $('#pcv_valve').css('animation','fadein0to1move 1s')
+                  $('#air_filter').css('display','none')
+                  // 图片变灰色,其余2图片变成红色
+                  $('#pcv_valve_btn img').attr('src','/static/img/grey_banner.png')
+                  $('#air_filter_btn img').attr('src','/static/img/red_banner.png')
+                  $('#oil_filter_btn img').attr('src','/static/img/red_banner.png')
+                })
+                // 滤清器
+                $('#air_filter_btn').click(function(){
+                  // 显示滤清器产品组,隐藏其余两个
+                  $('#oil_filter').css('display','none')
+                  $('#pcv_valve').css('display','none')
+                  $('#air_filter').css('display','flex')
+                  $('#air_filter').css('animation','fadein0to1move 1s')
+                  // 图片变灰色,其余2图片变成红色
+                  $('#pcv_valve_btn img').attr('src','/static/img/red_banner.png')
+                  $('#air_filter_btn img').attr('src','/static/img/grey_banner.png')
+                  $('#oil_filter_btn img').attr('src','/static/img/red_banner.png')
+                })
+                // 油滤器
+                $('#oil_filter_btn').click(function(){
+                  // 显示油滤器产品组,隐藏其余两个
+                  $('#oil_filter').css('display','flex')
+                  $('#oil_filter').css('animation','fadein0to1move 1s')
+                  $('#pcv_valve').css('display','none')
+                  $('#air_filter').css('display','none')
+                  // 图片变灰色,其余2图片变成红色
+                  $('#pcv_valve_btn img').attr('src','/static/img/red_banner.png')
+                  $('#air_filter_btn img').attr('src','/static/img/red_banner.png')
+                  $('#oil_filter_btn img').attr('src','/static/img/grey_banner.png')
+                })
+            </script>
+            <!-- 移入显示幕布和最小起订量JS -->
+            <script>
+    // 产品图片的上层的上层盒子hover:两个函数修改CSS
+    $('.yu_bbtp').hover(
+      // 移入
+      function(){
+        // 修改幕布和最小起订量display属性使其显示 
+        // $('.min_order,.red_curtain').css('display','block')
+        // this.querySelector('.min_order,.red_curtain')
+        $(this).find('.red_curtain').css('animation','fadein 0.5s linear forwards')
+        // $(this).parent().children('.red_curtain').css('animation','fadein 1s linear forwards')
+        // $(this).parent().children('.red_curtain').css('display','block')
+      },
+      // 移出
+      function(){
+        // 修改幕布和最小起订量display属性使其隐藏
+        // $('.min_order,.red_curtain').css('display','none')
+        $(this).find('.red_curtain').css('animation','fadeout 0.5s linear forwards')
+        // $(this).parent().children('.red_curtain').css('animation','fadeout 1s linear ')
+        // $(this).parent().children('.red_curtain').css('animation','fadeout 1s linear ')
+        // $(this).parent().children('.red_curtain').css('display','none')
+        // $('this').next().css('display','none')
+
+    })
+   </script>
+  
+   <!-- #TODO 执照轮播图 -->
+            <!-- 左右箭头拉动图片轮播图JS:通过首图左边距动画+最后一张假图+极限值直接设定边距 -->
+            <script>
+              // 激活小圆点样式函数:输入下标
+              function activate_spot(i){
+                $('.spot').eq(i).css('backgroundColor','red')
+                $('.spot').eq(i).css('opacity','1')
+                if(i==0){
+                  //激活小园点1 失活小圆点2 
+                  $('.spot').eq(1).css('backgroundColor','white')
+                 $('.spot').eq(1).css('opacity','0.5')
+                }
+                else if(i==1){
+                  //激活小园点2 失活小圆点1
+                  $('.spot').eq(0).css('backgroundColor','white')
+                 $('.spot').eq(0).css('opacity','0.5')
+                }
+              }
+              //0.入口函数:设圆点1为红色并且非透明
+              $(function(){
+                $('.spot:eq(0)').css('backgroundColor','red')
+                $('.spot:eq(0)').css('opacity','1')
+              })
+
+              // 一.左箭头点击事件0503:ok
+              $('.red_arrow:eq(0)').click(function(){
+                // 获取左箭头
+                var leftRedArrow= $('.red_arrow:eq(0)')
+                // 获取图片1
+                var certificate1=$('#certificate>img:eq(0)')
+                var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                // 根据左边距选择动画:边距:(-2192,-1096,0)
+                // 当边距为0:0到-1096 
+                if(marginLeft==0){
+                  console.log('左边距0')
+                  // 用动画
+                  certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                  // 激活对应小圆点:2
+                  activate_spot(1)
+                }
+                // 当边距为-1096:-1096到-2192 
+               else if(marginLeft==-1096){
+                  console.log('左边距-1096')
+                  // 用动画
+                  certificate1.css('animation','scrollPic-1096to-2192 1s forwards')
+                  // //再次获取左边距
+                  // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  // 激活对应小圆点:1
+                  activate_spot(0)
+                }
+                //当边距为-2192:2192并回到0,并拉动0到-1096 
+                else if(marginLeft==-2192){
+                  console.log('左边距-2192')
+                  certificate1.css('marginLeft','0')//回到0
+                  // 用动画
+                  certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                  // //再次获取左边距
+                  // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  // 激活对应小圆点:2
+                  activate_spot(1)
+                  
+                }
+                //当边距非以上(无动作)
+                else{
+                  console.log('左边距不是0,-1096,-2192无动作')
+                }
+              })
+              // 二.右箭头点击事件
+              $('.red_arrow:eq(1)').click(function(){
+                // 获取右箭头
+                var rightRedArrow= $('.red_arrow:eq(1)')
+                // 获取图片1
+                var certificate1=$('#certificate>img:eq(0)')
+                var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')+1096+'px'
+                console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                // 根据左边距选择动画:边距:(-2192,-1096,0)
+                // 当边距为0:切换到-2192 ,从-2192到-1096
+                if(marginLeft==0){
+                  console.log('边距为0:切换到-2192 ,从-2192到-1096')
+                  certificate1.css('marginLeft','-2192')//切换到-2192
+                  // 用动画:从-2192到-1096
+                  certificate1.css('animation','scrollPic-2192to-1096 1s forwards')
+                  // 激活对应小圆点:2
+                  activate_spot(1)
+                }
+                // 当边距为-1096:-1096到0   
+                else if(marginLeft==-1096){
+                  console.log('左边距-1096')
+                  // 用动画
+                  certificate1.css('animation','scrollPic-1096to0 1s forwards')
+                  // //再次获取左边距
+                  // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  // 激活对应小圆点:1
+                  activate_spot(0)
+                  
+                }
+                //当边距为-2192:2192并回到0,并拉动0到-1096 
+                else if(marginLeft==-2192){
+                  console.log('左边距-2192')
+                  // 用动画:从-2192到-1096
+                  certificate1.css('animation','scrollPic-2192to-1096 1s forwards')                    
+                  // 激活对应小圆点:2
+                  activate_spot(1)
+                }
+                //当边距非以上(无动作)
+                else{
+                  console.log('左边距不是0,-1096,-2192无动作')
+                }
+              })
+              // 三.左右小圆点拉动图片JS
+                // 1.圆点1点击事件:变成红色,显示图1或者图3时无动作,图2时拉动图1左边距-1096到0,把圆点2变成白色半透明
+                var spot1=$('.spot:eq(0)')//获取元素圆点1
+                var spot2=$('.spot:eq(1)')//获取元素圆点2
+                $('.spot:eq(0)').click(function(){
+                     
+                      // 把圆点1变成红色不透明
+                      // 把圆点2变成白色半透明
+                      
+                      // 判断边距
+                      // 获取图片1
+                      var certificate1=$('#certificate>img:eq(0)')
+                      //获取左边距
+                      var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                      var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                       //当为三大边距时激活圆点1
+                       if(marginLeft==0||marginLeft==-1096||marginLeft==-2192){
+                          activate_spot(0)
+                       } 
+                       console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                       // 当边距为-1096:-1096到-2192 ;其他情况下无动作
+                       if(marginLeft==-1096){
+                        console.log('圆点1:左边距-1096')
+                        console.log('左边距-1096')
+                        // 用动画
+                        certificate1.css('animation','scrollPic-1096to0 1s forwards')
+                  // //再次获取左边距
+                  // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                      }
+                        //当边距为-2192:2192并回到0,并拉动0到-1096 
+                      else if(marginLeft==-2192){
+                        var certificate1=$('#certificate>img:eq(0)')
+                        console.log('左边距-2192回到0')
+                        certificate1.css('marginLeft','0px')//回到0
+
+                        
+                      }
+                     }
+                    
+                     )
+                     // 2.圆点2点击事件
+                    $('.spot:eq(1)').click(function(){
+                      
+                      // // 把圆点2变成红色不透明
+                      // spot2.css('backgroundColor','red');
+                      // spot2.css('opacity','1')
+                      // // 把圆点1变成白色半透明
+                      // spot1.css('backgroundColor','white');
+                      // spot1.css('opacity','0.5')
+                      // 获取图片1
+                      var certificate1=$('#certificate>img:eq(0)')
+                      //获取左边距
+                      var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                      var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                      console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                      //当为三大边距时激活圆点2
+                      if(marginLeft==0||marginLeft==-1096||marginLeft==-2192){
+                         activate_spot(1)
+                      } 
+                      // 当边距为-1096:-1096到-2192;其他情况无动作
+                      if(marginLeft==-1096||marginLeft==0){
+                          console.log('圆点2:左边距-1096或者0:设边距为0')
+                          certificate1.css('marginLeft','0px')//设为0
+                          // 用动画
+                          certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                  
+                      }
+                })
+              // 轮播图自动运行
+              function scrollPic(){
+                 // 获取左箭头
+                 var leftRedArrow= $('.red_arrow:eq(0)')
+                // 获取图片1
+                var certificate1=$('#certificate>img:eq(0)')
+                var marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                var newMarginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')-1096+'px'
+                // console.log('左边距',marginLeft,'新边距',newMarginLeft)
+                // 根据左边距选择动画:边距:(-2192,-1096,0)
+                // 当边距为0:0到-1096 
+                if(marginLeft==0){
+                  console.log('左边距0')
+                  // 用动画
+                  certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                  // 激活对应小圆点:2
+                  activate_spot(1)
+                }
+                // 当边距为-1096:-1096到-2192 
+               else if(marginLeft==-1096){
+                  // console.log('左边距-1096')
+                  // 用动画
+                  certificate1.css('animation','scrollPic-1096to-2192 1s forwards')
+                  // //再次获取左边距
+                  // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  // 激活对应小圆点:1
+                  activate_spot(0)
+                }
+                //当边距为-2192:2192并回到0,并拉动0到-1096 
+                else if(marginLeft==-2192){
+                  // console.log('左边距-2192')
+                  certificate1.css('marginLeft','0')//回到0
+                  // 用动画
+                  certificate1.css('animation','scrollPic0to-1096 1s forwards')
+                  // //再次获取左边距
+                  // marginLeft=$('#certificate img:eq(0)').css('marginLeft').replace('px','')
+                  // 激活对应小圆点:2
+                  activate_spot(1)
+                  
+                }
+                //当边距非以上(无动作)
+                else{
+                  // console.log('左边距不是0,-1096,-2192无动作')
+                }
+              }
+              // 间隔2s播放轮播图
+              setInterval(function(){scrollPic()},2000)
+
+            </script>
+  <!-- 绑定鼠标移入事件:鼠标移入一级标签显示二级菜单 -->
+  <script>
+    // 绑定Products标签 
+    // 移入显示
+    $('.ul1>li:eq(1)').mouseover(function(){
+      
+      //修改li隐藏 display:block
+      $('.ul1>li:eq(1)>ul').css('display','block')
+    })
+    // 移出隐藏
+    $('.ul1>li:eq(1)').mouseout(function(){
+      
+      //修改li隐藏 display:block
+      $('.ul1>li:eq(1)>ul').css('display','none')
+    })
+     // 绑定Profile标签 
+    // 移入显示
+    $('.ul1>li:eq(2)').mouseover(function(){
+      
+      //修改li隐藏 display:block
+      $('.ul1>li:eq(2)>ul').css('display','block')
+    })
+    // 移出隐藏
+    $('.ul1>li:eq(2)').mouseout(function(){
+      
+      //修改li隐藏 display:block
+      $('.ul1>li:eq(2)>ul').css('display','none')
+    })
+  </script>
+  <!-- 气泡框js :z-index无效-->
+  <script>
+    // 指向Multispecialty supplier时显示气泡框
+    $('#supplier').mouseover(function(){
+      // 修改气泡框的display属性
+      $('.box,.cont,.triangle').css('display','block')
+      //指向字体时减少菜单的z-index
+      $('.ul1,.li1,.ul2,.li2').css('z-index','-1')
+
+    })
+      // 鼠标移出Multispecialty supplier时隐藏气泡框
+      $('#supplier').mouseout(function(){
+      // 修改气泡框的display属性
+      $('.box,.cont,.triangle').css('display','none')
+      //指向字体时减少菜单的z-index
+      $('.ul1,.li1,.ul2,.li2').css('z-index','6')
+    })
+    
+  </script>
+  <!-- 搜索框JS -->
+  <script>
+    // 移入搜索框变橙色
+    $('#search').mouseover(function(){
+      // 修改气搜索框属性
+      $('#search').attr('style','margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(191,74,0)')
+   })
+     // 鼠标移出搜索框变原来
+     $('#search').mouseout(function(){
+      // 修改气搜索框属性
+      $('#search').attr('style','margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(171,10,4)')
+   })
+    // 点击搜索框变橙色
+    $('#search').click(function(){
+      // 修改气搜索框属性
+      $('#search').attr('style','margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(191,74,0)')
+   })
+  </script>
+  <!-- 下拉箭头JS -->
+  <script>
+    /*移入Products旋转180度箭头*/
+    $('.ul1>li:eq(1)').mouseover(function(){
+      // 旋转180度箭头 transform:rotate(角度deg)
+      $('.array:eq(0)').css('transform','rotate(180deg)')
+      // 0.1s内执行过度动画
+      $('.array:eq(0)').css('transition','transform 0.1s linear')
+    })
+    // 移出Products改回0度
+    $('.ul1>li:eq(1)').mouseout(function(){
+      // 改回0度
+      $('.array:eq(0)').css('transform','rotate(0deg)')
+      // 0.1s内执行过度动画
+      $('.array:eq(0)').css('transition','transform 0.1s linear')
+    })
+    /* 移入Profile旋转180度箭头*/
+    $('.ul1>li:eq(2)').mouseover(function(){
+      // 旋转180度箭头 transform:rotate(角度deg)
+      $('.array:eq(1)').css('transform','rotate(180deg)')
+      // 0.1s内执行过度动画
+      $('.array:eq(1)').css('transition','transform 0.1s linear')
+    })
+    // 移出Profile改回0度
+    $('.ul1>li:eq(2)').mouseout(function(){
+      // 改回0度
+      $('.array:eq(1)').css('transform','rotate(0deg)')
+      // 0.1s内执行过度动画
+      $('.array:eq(1)').css('transition','transform 0.1s linear')
+   })
+  </script>
+  <!-- 爱心&FollowJS -->
+  <script>
+      /* 鼠标移入:原样式变深色否则不变*/
+      $('#love').mouseover(function(){
+        //css判断颜色:橙色就不变,否则变回原样
+        var color=$('#love').css('color')//获取color属性
+        console.log(color)
+        console.log(color=='rgb(204,86,1)')
+        var style=$('#love').attr('style')
+        console.log(style)
+        if(color=='rgb(204, 86, 1)'){
+          console.log('橙色就不变')
+        }
+        else{
+          $('#love').attr('style','cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(94,110,120);;vertical-align: middle;display:inline-block;font-size: 15; ')
+        }
+    })
+    // 移出变回原样或者橙色
+    $('#love').mouseout(function(){
+      //css判断颜色:橙色就不变,否则变回原样
+      var color=$('#love').css('color')
+      console.log(color)
+      console.log(color=='rgb(204,86,1)')
+      
+      if(color=='rgb(204, 86, 1)'){
+        console.log('橙色就不变')
+      }
+      else{
+        $('#love').attr('style','-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(125,146,163);;vertical-align: middle;display:inline-block;font-size: 15; ')
+
+      }
+    })
+    // 点击变成橙色&或者灰色
+    $('#love').click(function(){
+      //获取颜色
+      var color=$('#love').css('color')
+      console.log(color)
+      //css判断颜色:橙色就变灰色,灰色就变橙色
+      //橙色变灰色
+      if(color=='rgb(204, 86, 1)'){
+        console.log('橙色就变灰色')
+        $('#love').attr('style','cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.5;color: rgb(94,110,120);;vertical-align: middle;display:inline-block;font-size: 15; ')
+        var color=$('#love').css('color')
+         console.log(color)
+      }
+      //灰色就变橙色(调用动画:animation-duration:0.5s;animation-name:bigSmall:0.5秒执行bigsmall)
+      else{
+        $('#love').attr('style','cursor:pointer;-webkit-text-stroke: 0.5px white;margin-top: 5px;opacity: 0.8;color: rgb(204,86,1);vertical-align: middle;display:inline-block;font-size: 15; animation-duration:0.5s;animation-name:bigSmall')
+
+      }
+   })
+  </script>
