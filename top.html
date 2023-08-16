@@ -137,7 +137,7 @@
       transition:transform 0.1s linear;
     } -->
   <!-- </style>  -->
-  <li class="li1" style="position: relative;" ><a style="text-decoration: none;color:#ffffff;" href="/product ">Products<span  style="display: inline-block;margin-left: 5px;position: relative;top:3;" class="array glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+  <li class="li1" style="position: relative;" ><a style="text-decoration: none;color:#ffffff;" href="/products.html ">Products<span  style="display: inline-block;margin-left: 5px;position: relative;top:3;" class="array glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
     <!-- 二级下拉菜单  position:absolute;bottom: 0;-->
     <ul class="ul2" style="list-style:none;width:200px;">
       <li class="li2" style="width:200px;height:30px;"><a href="https://fobwerks.en.alibaba.com/productlist.html?spm=a2700.shop_plgr.88.7">See all categories</a></li>
@@ -171,10 +171,9 @@
   }
 </style>
 <li id="search_li" >
-  <form method="get" action="/product/">
-    {% csrf_token %}
+  <form method="get" action="https://fobwerks.en.alibaba.com/search/product">
   <!-- 搜索框  -->
-    <input  name="search_string" id="search" value="{{search_string}}"  style="margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(171,10,4)" tabindex="0" autocomplete="off" placeholder="Search in this store" value=""  >
+    <input  name="SearchText" id="search" value=""  style="margin-left:320 ;margin-top: 10px; width: 220;height: 25; border-radius:15px;border:1px solid rgb(171,10,4)" tabindex="0" autocomplete="off" placeholder="Search in this store" value=""  >
     <!-- <span class="glyphicon glyphicon-search" style="cursor: pointer;;opacity: 0.5;;position: relative;right: 20;" aria-hidden="true">
     </span> -->
     <!-- 提交搜索按钮 -->
